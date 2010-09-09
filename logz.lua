@@ -47,28 +47,6 @@ config.logs={
 			return ret
 		end
 	},
---[[
-	syslog={
-		file="/var/log/syslog",
-		func=function(n,e) 
-			local dat=default_syslog_format(n,e) 
-			local lines=utilz.split(dat,"\n")
-			local ret =""
-			for idx,line in ipairs(lines) do
-				if string.find(line,"registration state changed:") then
-					--naughty.notify({text="Registration state changed"}) 
-				elseif string.find(line,"tcpspy") then
-					l=chop_syslog_line(e)
-					networkz.alert(l)	
-				else
-					ret=ret..line.."\n"
-				end
-			end
-			ret=ret:sub(1,#ret-1)
-			return ret
-		     end
-	},
-]]--
 	messages={
 		file="/var/log/messages",
 		func=function(n,e) local ret=default_syslog_format(n,e); return ret end
@@ -95,14 +73,27 @@ config.logs={
         },
         debug={
                 file="/var/log/debug",
-                func=function(n,e) return default_syslog_format(n,e,{color='orange'}) end
+                --func=function(n,e) return default_syslog_format(n,e,{color='orange'}) end
+		func=function(n,e)
+                        local lines=utilz.split(e,"\n")
+                        local ret=""
+                        for idx,line in ipairs(lines) do
+                                if string.find(line,"registration state changed:") then
+                                elseif line~="" and line ~=nil and line~="^%s+$" then
+                                        local fn=config.logs[n].file
+                                        local msg=chop_syslog_line(line)
+                                        msg=awful.util.escape(msg)
+                                        local l="<span color='white'>"..fn.."</span><span color='orange'>"..msg.."</span>..\n"
+                                        ret=ret..l
+                                end
+                        end
+                        ret=ret:sub(1,#ret-1)
+                        return ret
+                end
         },
 	
 
 }
-function test(a)
-	naughty.notify({text=a})
-end
 
 function any_log_format(n,e,args)
                         local color="#555555"
@@ -215,6 +206,30 @@ function set_logs()
 
 end
 
+function set_widget_text()
+        if (config.quiet==false) then
+                logs_widget.text="<span color='white'>logs:</span><span color='green'>on</span>|"
+        else
+                logs_widget.text="<span color='white'>logs:</span><span color='red'>off</span>|"
+        end
+end
+
+function toggle()
+	if(config.quiet==true) then
+		enable()
+	else
+		disable()
+	end
+end
+function enable()
+	config.quiet=false
+	set_widget_text()
+end
+function disable()
+	config.quiet=true
+	config.panel:hide()
+	set_widget_text()
+end
 
 function key_listener(mod_keys,key,action)
 	--naughty.notify({text=key.." action:"..action})
@@ -232,25 +247,11 @@ end
 
 logs_widget=widget({type="textbox"})
 function init()
-
-	if (config.quiet==false) then 
-        	logs_widget.text="<span color='white'>logs:</span><span color='green'>on</span>|"
-	else
-		logs_widget.text="<span color='white'>logs:</span><span color='red'>off</span>|"
-	end
+	set_widget_text()
+	set_logs()
         logs_widget:buttons(
                 awful.util.table.join(
-                        awful.button({},1,
-                        function()
-                                if(config.quiet==false) then
-                                        logs_widget.text="<span color='white'>logs:</span><span color='red'>off</span>|"
-                                        config.quiet=true
-                                else
-                                        logs_widget.text="<span color='white'>logs:</span><span color='green'>on</span>|"
-                                        config.quiet=false
-					set_logs()
-                                end
-                        end)
+                        awful.button({},1,function() toggle() end)
                 )
         )
 	logs_widget:add_signal("mouse::enter",function() 

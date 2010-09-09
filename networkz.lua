@@ -32,7 +32,7 @@ function set_widget_text()
 	else
 		ret="|<span color='white'>net alerts:</span><span color='red'>off</span>|"
 	end
-	return ret
+	net_widget.text=ret
 end
 
 
@@ -47,13 +47,25 @@ end
 
 function toggle_network(args)
 end
-
+function toggle_alerts()
+	if(config.alerts==true) then disable() 
+	else enable() end
+end
+function enable()
+	config.alerts=true
+	set_widget_text()
+end
+function disable()
+	config.alerts=false
+	config.alerts_panel:hide()
+	set_widget_text()
+end
 function main()
 	config.alerts_panel=panelz.Panel.new({rows=3})
 	config.alerts_panel.wibox.width=600
 	config.alerts_panel.wibox.height=50
 	--config.alerts_panel.wibox.y=200
-	net_widget.text=set_widget_text()
+	set_widget_text()
 
 	config.netstat_panel=panelz.Panel.new({rows=40})
 	config.netstat_panel.wibox.width=200
@@ -64,10 +76,7 @@ end
 function init()
 	net_widget:buttons(
 		awful.util.table.join(
-			awful.button({},1,function()
-				config.alerts=not config.alerts
-				net_widget.text=set_widget_text()
-			end)
+			awful.button({},1,function() toggle_alerts() end)
 		)
 	)
 	net_widget:add_signal("mouse::enter",function()
