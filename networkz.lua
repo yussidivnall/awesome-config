@@ -21,7 +21,7 @@ config.monitor=false
 
 config.selectable={"net_alerts","netstat"}
 config.selected=1
-config.selected_wibox_color="red"
+config.selected_wibox_color="#aa0ba9"
 config.unselected_wibox_color="#0a0ba9"
 net_widget=widget({type='textbox'})
 

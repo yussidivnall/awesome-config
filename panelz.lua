@@ -163,6 +163,7 @@ function Panel.redraw(me)
 end
 
 function Panel.scroll(me,args)
+	if(#me.element_list < 1) then return end
 	local direction=args.direction
 	local rows=args.rows or 1
 	if direction=="up" then 
