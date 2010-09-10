@@ -9,6 +9,7 @@ local string=require("string")
 local table=table
 local widget=widget
 local ipairs=ipairs
+local keygrabber=keygrabber
 module("networkz")
 local config={}
 config.alerts_panel = nil
@@ -17,8 +18,57 @@ config.netstat_args=" -nutpeed"
 
 config.alerts=true
 config.monitor=false
+
+config.selectable={"net_alerts","netstat"}
+config.selected=1
+config.selected_wibox_color="red"
+config.unselected_wibox_color="#0a0ba9"
 net_widget=widget({type='textbox'})
 
+
+
+
+function reset_colors()
+	config.alerts_panel.wibox.border_color=config.unselected_wibox_color
+	config.netstat_panel.wibox.border_color=config.unselected_wibox_color
+end
+
+function highlight_selection()
+	reset_colors()
+	if(config.selectable[config.selected]=="net_alerts") then
+		config.alerts_panel.wibox.border_color=config.selected_wibox_color
+	elseif(config.selectable[config.selected]=="netstat") then
+		config.netstat_panel.wibox.border_color=config.selected_wibox_color
+	end
+end
+function scroll_selection(d)
+	if(config.selectable[config.selected]=="net_alerts") then 
+		config.alerts_panel:scroll({direction=d})
+	end
+end
+
+
+function toggle_selection(direction)
+	--if direction==nil then return end
+	if(direction=="left") then 
+		config.selected=config.selected-1
+		if config.selected < 1 then config.selected=#config.selectable end
+	end
+	if(direction=="right") then
+		config.selected=config.selected+1
+		if config.selected > #config.selectable then config.selected=1 end
+	end
+	naughty.notify({text=config.selectable[config.selected]})
+	highlight_selection()
+end
+
+function key_listener(mod_keys,key,action)
+	if(key=="h" or key=="Left")and action=="press" then toggle_selection("left") end
+	if(key=="l" or key=="Right") and action=="press" then toggle_selection("right")end
+	if(key=="j" or key=="Up")and action=="press" then scroll_selection("up")end
+	if(key=="k" or key=="Down")and action=="press" then scroll_selection("down")end
+	return true
+end
 
 function alert(msg)
 	config.alerts_panel:append({text="<span color='yellow'>"..msg.."</span>"})
@@ -76,7 +126,7 @@ end
 function init()
 	net_widget:buttons(
 		awful.util.table.join(
-			awful.button({},1,function() toggle_alerts() end)
+			awful.button({},1,function() toggle_alerts(); config.alerts_panel:show() end)
 		)
 	)
 	net_widget:add_signal("mouse::enter",function()
@@ -86,12 +136,15 @@ function init()
 			config.alerts_panel.hide_timer:stop()
 			config.alerts_panel.hide_timer=nil;
 		end
+		keygrabber.run(function(m,k,a) return key_listener(m,k,a) end)
 		
 	end)
 	net_widget:add_signal("mouse::leave",function()
 		config.alerts_panel:hide()
 		hide_monitor()
+		keygrabber.stop()
 	end)
+	highlight_selection()
 end
 main()
 init()
