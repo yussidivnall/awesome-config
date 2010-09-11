@@ -71,7 +71,9 @@ function Panel.update(me,l)
 				table.remove(me.wi_list,element_index)
 				me.wi_list[element_index]=l[i].widgets 
 			end
-			if l[i].text~=nil then me.wi_list[element_index].text=l[element_index].text end
+			if l[i].text~=nil then 
+				me.wi_list[element_index].text=l[element_index].text 
+			end
 			if l[i].signals~=nil then
 				for sig,funk in pairs(l[i].signals) do
 					--@TODO Needs to check if signal and function already the same for the widget and if so skip all of this
