@@ -1,0 +1,417 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+    <title>Reference</title>
+    <link rel="stylesheet" href="../luadoc.css" type="text/css" />
+	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
+</head>
+
+<body>
+<div id="container">
+
+<div id="product">
+	<div id="product_logo"></div>
+	<div id="product_name"><big><b></b></big></div>
+	<div id="product_description"></div>
+</div> <!-- id="product" -->
+
+<div id="main">
+
+<div id="navigation">
+
+
+<h1>LuaDoc</h1>
+<ul>
+	
+	<li><a href="../index.html">Index</a></li>
+	
+</ul>
+
+
+<!-- Module list -->
+
+<h1>Modules</h1>
+<ul>
+
+	<li>
+		<a href="../modules/panelz.html">panelz</a>
+	</li>
+
+	<li>
+		<a href="../modules/z.html">z</a>
+	</li>
+
+	<li>
+		<a href="../modules/z.panel.html">z.panel</a>
+	</li>
+
+	<li>
+		<a href="../modules/z.utilz.html">z.utilz</a>
+	</li>
+
+</ul>
+
+
+
+<!-- File list -->
+
+<h1>Files</h1>
+<ul>
+
+	<li>
+		<a href="../files/init.html">init.lua</a>
+	</li>
+
+	<li><strong>panel.lua</strong></li>
+	
+	<li>
+		<a href="../files/panelz.html">panelz.lua</a>
+	</li>
+
+	<li>
+		<a href="../files/utilz.html">utilz.lua</a>
+	</li>
+
+</ul>
+
+
+
+
+
+
+</div> <!-- id="navigation" -->
+
+<div id="content">
+
+<h1>File <code>panel.lua</code></h1>
+
+
+<p></p>
+
+
+<p><b>Author:</b>
+<table class="authors_list">
+
+	<tr><td class="name">Yussi Divnal </td></tr>
+
+</table>
+</p>
+
+
+
+
+
+<h2>Functions</h2>
+<table class="function_list">
+
+	<tr>
+	<td class="name" nowrap><a href="#panel.append">panel.append</a>&nbsp;(me, element)</td>
+	<td class="summary">Appends an element (a string) to end of list and scroll to bottom </td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#panel.hide">panel.hide</a>&nbsp;(me)</td>
+	<td class="summary">Hides panel </td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#panel.new">panel.new</a>&nbsp;(args, args.rows, args.wibox_params)</td>
+	<td class="summary">Creates a new panel </td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#panel.scroll">panel.scroll</a>&nbsp;(me, args, direction)</td>
+	<td class="summary">Scroll the displayed list </td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#panel.set_payload">panel.set_payload</a>&nbsp;(me, args)</td>
+	<td class="summary">Sets the payload of the panel </td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#panel.show">panel.show</a>&nbsp;(me)</td>
+	<td class="summary">Shows panel </td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#panel.toggle">panel.toggle</a>&nbsp;(me)</td>
+	<td class="summary">Toggle panel's visibility </td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#panel.update">panel.update</a>&nbsp;(me)</td>
+	<td class="summary">Updates the displayed widgets list </td>
+	</tr>
+
+</table>
+
+
+
+
+
+
+<br/>
+<br/>
+
+
+
+
+<h2><a name="functions"></a>Functions</h2>
+<dl class="function">
+
+
+
+<dt><a name="panel.append"></a><strong>panel.append</strong>&nbsp;(me, element)</dt>
+<dd>
+Appends an element (a string) to end of list and scroll to bottom
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  me: 
+	</li>
+	
+	<li>
+	  element: - a string to append
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="panel.hide"></a><strong>panel.hide</strong>&nbsp;(me)</dt>
+<dd>
+Hides panel
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  me: 
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="panel.new"></a><strong>panel.new</strong>&nbsp;(args, args.rows, args.wibox_params)</dt>
+<dd>
+Creates a new panel
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  args: a table of arguments
+	</li>
+	
+	<li>
+	  args.rows: - number of rows to display, default 15 \n
+	</li>
+	
+	<li>
+	  args.wibox_params: - parameters for utilz.new_wibox()
+	</li>
+	
+</ul>
+
+
+
+
+
+
+<h3>Return value:</h3>
+a new panel
+
+
+
+</dd>
+
+
+
+
+<dt><a name="panel.scroll"></a><strong>panel.scroll</strong>&nbsp;(me, args, direction)</dt>
+<dd>
+Scroll the displayed list
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  me: 
+	</li>
+	
+	<li>
+	  args: 
+	</li>
+	
+	<li>
+	  direction: (up,down,first,last)
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="panel.set_payload"></a><strong>panel.set_payload</strong>&nbsp;(me, args)</dt>
+<dd>
+Sets the payload of the panel
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  me: - a panel context
+	</li>
+	
+	<li>
+	  args: - a table of arguments args.payload - a table of strings to use as payload
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="panel.show"></a><strong>panel.show</strong>&nbsp;(me)</dt>
+<dd>
+Shows panel
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  me: 
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="panel.toggle"></a><strong>panel.toggle</strong>&nbsp;(me)</dt>
+<dd>
+Toggle panel's visibility
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  me: 
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+
+
+<dt><a name="panel.update"></a><strong>panel.update</strong>&nbsp;(me)</dt>
+<dd>
+Updates the displayed widgets list
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  me: 
+	</li>
+	
+</ul>
+
+
+
+
+
+
+
+
+</dd>
+
+
+</dl>
+
+
+
+
+
+
+
+</div> <!-- id="content" -->
+
+</div> <!-- id="main" -->
+
+<div id="about">
+	<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0!" height="31" width="88" /></a></p>
+</div> <!-- id="about" -->
+
+</div> <!-- id="container" -->	
+</body>
+</html>
