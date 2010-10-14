@@ -35,10 +35,6 @@
 <ul>
 
 	<li>
-		<a href="../modules/panelz.html">panelz</a>
-	</li>
-
-	<li>
 		<a href="../modules/z.html">z</a>
 	</li>
 
@@ -47,7 +43,7 @@
 	</li>
 
 	<li>
-		<a href="../modules/z.utilz.html">z.utilz</a>
+		<a href="../modules/z.utils.html">z.utils</a>
 	</li>
 
 </ul>
@@ -66,11 +62,7 @@
 	<li><strong>panel.lua</strong></li>
 	
 	<li>
-		<a href="../files/panelz.html">panelz.lua</a>
-	</li>
-
-	<li>
-		<a href="../files/utilz.html">utilz.lua</a>
+		<a href="../files/utils.html">utils.lua</a>
 	</li>
 
 </ul>
@@ -117,7 +109,12 @@
 
 	<tr>
 	<td class="name" nowrap><a href="#panel.new">panel.new</a>&nbsp;(args, args.rows, args.wibox_params)</td>
-	<td class="summary">Creates a new panel </td>
+	<td class="summary">Creates a new panel from a table of arguments </td>
+	</tr>
+
+	<tr>
+	<td class="name" nowrap><a href="#panel.pop">panel.pop</a>&nbsp;(me, args, args.timeout)</td>
+	<td class="summary">Pops panel If panel is already on a pop timer, restart it, If panel is visible and not on a pop timer, do nothing else pop up panel for a given time </td>
 	</tr>
 
 	<tr>
@@ -221,14 +218,14 @@ Hides panel
 
 <dt><a name="panel.new"></a><strong>panel.new</strong>&nbsp;(args, args.rows, args.wibox_params)</dt>
 <dd>
-Creates a new panel
+Creates a new panel from a table of arguments
 
 
 <h3>Parameters</h3>
 <ul>
 	
 	<li>
-	  args: a table of arguments
+	  args: 
 	</li>
 	
 	<li>
@@ -236,7 +233,7 @@ Creates a new panel
 	</li>
 	
 	<li>
-	  args.wibox_params: - parameters for utilz.new_wibox()
+	  args.wibox_params: - parameters for z.utils.new_wibox()
 	</li>
 	
 </ul>
@@ -248,6 +245,40 @@ Creates a new panel
 
 <h3>Return value:</h3>
 a new panel
+
+
+
+</dd>
+
+
+
+
+<dt><a name="panel.pop"></a><strong>panel.pop</strong>&nbsp;(me, args, args.timeout)</dt>
+<dd>
+Pops panel If panel is already on a pop timer, restart it, If panel is visible and not on a pop timer, do nothing else pop up panel for a given time
+
+
+<h3>Parameters</h3>
+<ul>
+	
+	<li>
+	  me: 
+	</li>
+	
+	<li>
+	  args: 
+	</li>
+	
+	<li>
+	  args.timeout: the timeout to pop for default 5
+	</li>
+	
+</ul>
+
+
+
+
+
 
 
 

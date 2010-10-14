@@ -3,7 +3,8 @@
 --------------------------------------
 local setmetatable=setmetatable
 local table=table
-local utilz=require("z.utilz")
+require("z.utils")
+--local utilz=require("z.utils")
 local z=z
 local wibox=wibox
 local timer=timer
@@ -12,18 +13,17 @@ module("z.panel")
 panel={
 }
 
----Creates a new panel
---@param args a table of arguments
+---Creates a new panel from a table of arguments
 --@param args.rows - number of rows to display, default 15 \n
---@param args.wibox_params - parameters for utilz.new_wibox()
+--@param args.wibox_params - parameters for z.utils.new_wibox()
 --@param args.root_layout
 --@param args.payload_layout
 --@return a new panel
 function panel.new(args)
 	local ret={}
 	ret.num_rows=args.rows or 15	
-	ret.wb_params = args.wibox_params or {}
-	ret.wibox=z.utilz.new_wibox(wb_params or {})
+	ret.wb_params = args.wibox_params or {height=ret.num_rows*13}
+	ret.wibox=z.utils.new_wibox(ret.wb_params)
 	ret.root_layout = args.root_layout or wibox.layout.align.vertical()
 	ret.payload_layout = args.payload_layout or wibox.layout.fixed.vertical()
 	for i=1,ret.num_rows do
@@ -60,9 +60,9 @@ function panel.update(me)
 		local widget_index=i-me.current_index+1
 		if(me.payload[i]~=nil) then
 			--Check type (see todo)
-			me.payload_layout.widgets[widget_index]:set_text(me.payload[i])
+			me.payload_layout.widgets[widget_index]:set_markup(me.payload[i])
 		else
-			me.payload_layout.widgets[widget_index]:set_text(i..": empty")
+			me.payload_layout.widgets[widget_index]:set_markup(i..": empty")
 		end
 	end	
 end
@@ -105,6 +105,11 @@ function panel.hide(me) me.wibox.visible=false end
 ---Toggle panel's visibility
 function panel.toggle(me) me.wibox.visible=not me.wibox.visible end
 
+---Pops panel 
+-- If panel is already on a pop timer, restart it, 
+-- If panel is visible and not on a pop timer, do nothing
+-- else pop up panel for a given time
+--@param args.timeout the timeout to pop for default 5
 function panel.pop(me,args)
 	local to=args.timeout or me.default_pop_timeout or 5
 	if(me.wibox.visible==true and me.pop_timer_on==false) then return end -- no need to popup
