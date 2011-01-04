@@ -126,8 +126,10 @@ end
 function init_widget()
         widget=wibox.widget.textbox({})
         set_widget()
-        widget.buttons=awful.util.table.join(
-                awful.button({},1,function() toggle_widget() end )
+        widget:buttons(
+                awful.button({},1,function() 
+			toggle_widget() 
+		end )
         )
 	widget:add_signal("mouse::enter",function() 
 		naughty.notify({text="mouse::enter"})
