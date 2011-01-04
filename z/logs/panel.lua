@@ -20,11 +20,33 @@ config.logs={
         messages={
                 file="/var/log/messages",
                 func=function(n,e) return default_syslog_format(n,e,{color='red'}) end
-        }
+        },
+	snort={
+		file="/var/log/snort/alert",
+		func=function(n,e) return plain_log_format(n,e,{color='blue'}) end
+	}
 
 }
 config.update_time=1
 config.quiet=false
+function plain_log_format(n,e,args)
+	if(e==nil) then return end
+	local color=args.color or "#2212bb"
+	local ret=""
+	local file_name=config.logs[n].file
+	local lines=z.utils.split(e,"\n")
+	for i,l in ipairs(lines) do
+		local txt=l
+		if (txt~="" and txt~=nil and txt~="^%s+$") then
+			txt=awful.util.escape(txt)
+			ret=ret.."<span color='#ffffff'>"..file_name.."</span>".."<span color='"..color.."'>"..txt.."</span>\n"
+		end
+	end
+	local ret=ret:sub(1,#ret-1)
+	return ret
+end
+
+
 function default_syslog_format(n,e,args)
 
                         local color="#2212bb"
@@ -53,7 +75,7 @@ function watch_logs()
         if events then
                 for idx,event in ipairs(events) do
                         for name,log in pairs(config.logs)do
-                                updated(name)
+                               if(event.wd==log.wd) then updated(name) end
                         end
                 end
         end
@@ -75,11 +97,11 @@ function updated(name)
         local f=io.open(log.file)
         local l=f:read("*a")
         f:close()
-        --naughty.notify({text="<span color='yellow'>"..log.length.."</span>"})
+        --naughty.notify({text="<span color='yellow'>"..log.length.."</span>"..name})
         local diff=l:sub(log.length+1,#l-1)
         local msg=parse(name,diff)
 
-        if diff=="(\r?\n)%s*\r?\n" then return end
+	if diff=="(\r?\n)%s*\r?\n" then return end
         if diff==nil then return end
         local txt=msg
         if (txt==nil or txt=="") then return end
