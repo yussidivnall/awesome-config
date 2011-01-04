@@ -1,7 +1,7 @@
 local table=table
 local setmetatable=setmetatable
 local utilz=require("utilz")
-local widget=widget
+local widget=wibox.widget
 local awful = require("awful")
 local table=table
 local type=type
@@ -23,8 +23,8 @@ function Panel.new(args)
 	local  ret={}
 	local wb_params=args.wibox_params or {}
 	local num_rows=args.rows or 15
-	local wi_list_layout=args.list_layout or awful.widget.layout.vertical.topdown
-	local wibox_layout=args.wibox_layout or awful.widget.layout.vertical.topdown
+	local wi_list_layout=args.list_layout or wibox.layout.flex
+	local wibox_layout=args.wibox_layout or wibox.layout.flex
 	ret.header = args.header or nil
 	ret.footer = args.footer or nil
 	ret.wibox=utilz.new_wibox(wb_params)
@@ -32,8 +32,9 @@ function Panel.new(args)
 	ret.wibox.screen=1
 	ret.wi_list={}
 	for i=1,num_rows do
-		local w=widget({type="textbox"})
-		w.text="empty:"..i
+		local w=wibox.widget.textbox()
+		w.text=""
+		--w.text="empty:"..i
 		table.insert(ret.wi_list,w)
 	end
 	ret.wi_list["layout"]=wi_list_layout
@@ -48,16 +49,17 @@ function Panel.new(args)
 end
 
 function Panel.update(me,l)
-	local l = l
+	--local l = l
 	for i=me.current_index,me.num_rows do
 		--naughty.notify({text="hlkjhl"..i})
 		local element_index=i-me.current_index+1
 		if(l[i]==nil) then
-			local empty=widget({type='textbox'})
-			empty.text=i.." : -"
-			me.wi_list[i]=empty
-			--me.wi_list[i].text=i.." : -"
-			--me.wi_list[element_index].text=i.." : -"
+			if(me.wi_list[1].text~=nil) then
+				me.wi_list[i].text=i.." : -"
+			end
+			--local empty=widget({type='textbox'})
+			--empty.text=i.." : -"
+			--me.wi_list[i]=empty
 		else
 			if l[i].widgets ~= nil then
 				--@TODO figure out why this doesn't do the trick
@@ -70,7 +72,9 @@ function Panel.update(me,l)
 				table.remove(me.wi_list,element_index)
 				me.wi_list[element_index]=l[i].widgets 
 			end
-			if l[i].text~=nil then me.wi_list[element_index].text=l[element_index].text end
+			if l[i].text~=nil then 
+				me.wi_list[element_index].text=l[element_index].text 
+			end
 			if l[i].signals~=nil then
 				for sig,funk in pairs(l[i].signals) do
 					--@TODO Needs to check if signal and function already the same for the widget and if so skip all of this
@@ -83,7 +87,7 @@ function Panel.update(me,l)
 							end	
 						end
 					end
-					me.wi_list[element_index]:add_signal(sig,funk)
+					me.wi_list[element_index]:connect_signal(sig,funk)
 				end	
 			end
 		end
@@ -112,7 +116,7 @@ function Panel.pop(me,args)
 	me.on_timer=true
 	if(me.hide_timer~=nil) then me.hide_timer:stop() end
 	me.hide_timer=timer({timeout=to})
-	me.hide_timer:add_signal("timeout",function() me:hide();me.on_timer=false end)
+	me.hide_timer:connect_signal("timeout",function() me:hide();me.on_timer=false end)
 	me.hide_timer:start()
 end
 
@@ -141,18 +145,73 @@ function Panel.bottom(me)
 				me.wi_list[wl_index].text=me.element_list[i].text
 				--me.wi_list[wl_index].text=i.." - "..me.element_list[i].text
 			end
-		end	 
+		end
+		me.current_index=s
+		--naughty.notify({text="bottom:"..s})
 	end
 end
+function Panel.redraw(me)
+	--naughty.notify({text="REDRAW!!!"})
+	for i=me.current_index,(me.current_index+me.num_rows-1) do
+		--naughty.notify({text="<span color='green'>"..i.."</span>"})
+		local wi_index=i-me.current_index+1
+		if me.element_list[i] == nil then
+			naughty.notify({text="ERROR!!NIL value(Panel.redraw)"}) 
+		end
+		if me.element_list[i].text ~= nil then 
+			me.wi_list[wi_index].text=me.element_list[i].text
+		end
+		--naughty.notify({text="Redrawing row:"..i})
+	end
+end
+
+function Panel.scroll(me,args)
+	if(#me.element_list < 1) then return end
+	local direction=args.direction
+	local rows=args.rows or 1
+	if direction=="up" then 
+		--naughty.notify({text="Scrool up"})
+		--if me.current_index==1 then return end
+		if (me.current_index-rows <= 1)then  
+			me.current_index=1 
+		else
+			me.current_index=me.current_index-rows
+		end
+		--naughty.notify({text="current_index:"..me.current_index})
+	end
+	if direction=="down" then
+		if me.current_index > (#me.element_list-me.num_rows) then 
+			me.current_index=(#me.element_list-me.num_rows) 
+		end
+		me.current_index=me.current_index+1
+	end
+	me:redraw() 
+end
+
+--@TODO put an optional limit to trancate this, 
+--This could grow indefinately and use too much memory,
+--Another option is to buffer this in a file...
 function Panel.append(me,args)
 	table.insert(me.element_list,args)
 	me:bottom()
 end
-function Panel.resize(me)
-	total_height=0;
-	for i=1,me.num_rows do
-		ext=me.wi_list[i]:extents()
-		total_height = total_height+ext.height
+
+--@TODO fix resizing this
+function Panel.resize(me,args)
+	if args~=nil then
 	end
-	me.wibox.height=total_height
+	local max_height=args.max_height or 10
+	local max_width=args.max_width or 200
+	local total_height=1;
+	for i=1,me.num_rows do
+		local sz=me.wi_list[i]:get_size()
+		total_height = total_height+sz
+--		--local ext=me.wi_list[i]:extents()
+--		--total_height = total_height+ext.height
+	end
+	if (args.max_height and total_height > args.max_height) then 
+		me.wibox.height=args.max_height
+	else 
+		me.wibox.height=total_height
+	end
 end

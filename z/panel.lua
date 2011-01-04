@@ -22,7 +22,8 @@ panel={
 function panel.new(args)
 	local ret={}
 	ret.num_rows=args.rows or 15	
-	ret.wb_params = args.wibox_params or {height=ret.num_rows*13}
+	ret.wb_params = args.wibox_params or {}
+	if not ret.wb_params.height then ret.wb_params.height=ret.num_rows*13 end
 	ret.wibox=z.utils.new_wibox(ret.wb_params)
 	ret.root_layout = args.root_layout or wibox.layout.align.vertical()
 	ret.payload_layout = args.payload_layout or wibox.layout.fixed.vertical()
@@ -104,6 +105,8 @@ function panel.show(me) me.wibox.visible=true end
 function panel.hide(me) me.wibox.visible=false end
 ---Toggle panel's visibility
 function panel.toggle(me) me.wibox.visible=not me.wibox.visible end
+--is visible
+function panel.visible(me) return me.wibox.visible end
 
 ---Pops panel 
 -- If panel is already on a pop timer, restart it, 

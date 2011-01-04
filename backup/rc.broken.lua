@@ -7,11 +7,12 @@ require("beautiful")
 beautiful.init("/usr/local/share/awesome/themes/default/theme.lua")
 -- Notification library
 require("naughty")
-require("z")
+--require("utilz")
+--require("logz")
+--require("networkz")
+--require("connectionz")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-local wibox=wibox
-local widget=wibox.widget
 config={}
 if (screen.count() ==1) then
 	config.screen=1
@@ -32,17 +33,17 @@ config.keys.global=awful.util.table.join(
 	awful.key({ config.modkey,           }, "Down",   awful.tag.viewprev      ),
 	awful.key({ config.modkey,	     }, "Left",  function() switch_client("next") end ),
 	awful.key({ config.modkey,	     }, "Right", function() switch_client("prev") end ),
-	awful.key({ config.modkey,	     }, "space",function() awful.layout.inc(config.layouts,1);naughty.notify({text=awful.layout.get(screen):getname()}) end),
+	awful.key({ config.modkey,	     }, "space",function() awful.layout.inc(config.layouts,1) end),
 	awful.key({ config.modkey,	     }, "Return", function() awful.util.spawn(config.terminal) end),
+	awful.key({ config.modkey,"Shift"    }, "Up", function() naughty.notify({text="what does i do"}) end),
 	awful.key({ config.modkey,	     },"r",function() config.widgets.promptbox:run() end),
 	awful.key({ config.modkey,	     },"x",function() lua_prompt() end),
-	awful.key({ config.modkey,"Control"  }, "r",awesome.restart),
+        awful.key({ config.modkey,"Control"  }, "r",awesome.restart),
         awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit)
 )
 config.keys.client=awful.util.table.join(
 	awful.key({ config.modkey,	     },"q", function(c) c:kill() end),
-	awful.key({ config.modkey,	     },"m", function(c) maximize_client(c) end),
-	awful.key({ config.modkey,	     },"k", function(c) float_client(c,{}) end)
+	awful.key({ config.modkey,	     },"m", function(c) maximize_client(c) end)
 )
 
 config.mouse={}
@@ -51,18 +52,16 @@ config.mouse.client=awful.util.table.join(
 	awful.button({ config.modkey },1,awful.mouse.client.move),
 	awful.button({},1,function(c) client.focus=c; c:raise() end)
 )
-config.mouse.tags=awful.util.table.join(
-	awful.button({ config.modkey },3,awful.client.movetotag)
-)
-
 config.tags={}
 
 config.widgets={}
 config.widgets.text_clock=awful.widget.textclock()
-config.widgets.systray=wibox.widget.systray()
+--config.widgets.systray=wibox.widget.systray()
 config.widgets.promptbox=awful.widget.prompt()
 config.widgets.tags={}
 config.widgets.tasks={}
+config.widgets.layout_box={}
+
 config.multiple_screens="duplicate"
 
 function lua_prompt()
@@ -74,15 +73,6 @@ end
 function maximize_client(c)
             c.maximized_horizontal = not c.maximized_horizontal
             c.maximized_vertical   = not c.maximized_vertical
-	    c.ontop=true
-	    c.focus=true
-end
-function float_client(c,args)
-	awful.client.floating.toggle(c)
-	if(args=={}) then 
-		return 
-	else
-	end
 end
 function switch_client(args)
 	if(args=="next" or args=="prev" ) then
@@ -94,41 +84,47 @@ function switch_client(args)
 		end
 		awful.client.focus.byidx(idx)
 		if client.focus then client.focus:raise() end 
-	        if not c:isvisible() then
-                	awful.tag.viewonly(c:tags()[1])
-                end
-
 	end
 
 end
 
 function get_default_tags(args)
         local s=args.screen or 1
-        local t=args.tags or {"main","www"}
+        local t=args.tags or {"main","www","test_a","test_b","test_c"}
         return awful.tag(t,s,config.layouts[1])
 end
-
-
-
-if (screen.count()==1) then
-	config.tags[1]=get_default_tags({screen=1,tags={"main","www","test1","test2","test3"}})
-	config.widgets.tags=awful.widget.taglist(1,awful.widget.taglist.filter.all,config.mouse.tags)
-	config.widgets.tasks=awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags,{})
-	config.topbar_wibox={}
-	config.topbar_wibox[1]=awful.wibox({position="top",screen=1})
-
-	local left_widgets=wibox.layout.fixed.horizontal()
-	left_widgets:add(config.widgets.tags)
+function setup_one_screen()
+	local s=1
+	config.tags[s]=get_default_tags({screen=1,tags={"main","www","test1","test2","test3"}})
+	config.widgets.tasks[s]=awful.widget.tasklist(s,awful.widget.tasklist.filter.currenttags,{})
+	config.widgets.layout_box[s]=awful.widget.layoutbox(s)
+        config.widgets.tags=awful.widget.taglist(s,awful.widget.taglist.filter.all,{})
+        config.topbar_wibox={}
+	config.topbar_wibox[s]=awful.wibox({position="top",screen=s})
+--	local logz_widgets=wibox.layout.fixed.horizontal()
+--	logz_widgets:add(logz.logz_widget)
+--	logz_widgets:add(networkz.net_widget)	
+        local left_widgets=wibox.layout.fixed.horizontal()
 	left_widgets:add(config.widgets.promptbox)
+	left_widgets:add(config.widgets.tags)
 	left_widgets:add(config.widgets.tasks)
+--	left_widgets:add(logz_widgets)
+	local center_widgets=wibox.layout.fixed.horizontal()
 	local right_widgets=wibox.layout.fixed.horizontal()
+	right_widgets:add(wibox.widget.systray())
+	right_widgets:add(config.widgets.layout_box)
 	right_widgets:add(config.widgets.text_clock)
-	right_widgets:add(config.widgets.systray)
-	right_widgets:add(z.logs.panel.widget)
+
 	local horizontal_widgets=wibox.layout.align.horizontal()
 	horizontal_widgets:set_left(left_widgets)
 	horizontal_widgets:set_right(right_widgets)
-	config.topbar_wibox[1]:set_widget(horizontal_widgets)
+	config.topbar_wibox[s]:set_widget(horizontal_widgets)
+
+end
+
+
+if (screen.count()==1) then
+	setup_one_screen()
 else
 	if (config.multiple_screens=="duplicate") then
 		--@TODO all screens same
@@ -142,35 +138,29 @@ root.keys(config.keys.global)
 awful.rules.rules = {
 	{ rule = { },
 	properties= { 
-		border_width = beautiful.border_width,
-                border_color = beautiful.border_normal,
-                focus = true,
+		border_width=beautiful.border_width,
+		border_color=beautiful.border_normal,
+		focus=true,
 		keys=config.keys.client,
 		buttons = config.mouse.client
 	}}
 }
 
-client.connect_signal("manage", function (c, startup)
-    -- Enable sloppy focus
-    c:connect_signal("mouse::enter", function(c)
-        if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
-            and awful.client.focus.filter(c) then
-            client.focus = c
-        end
-    end)
+client.add_signal("manage",
+		function (c,startup)
+			c:add_signal("mouse::enter",
+				function(c)
+					if (awful.layout.get(c.screen)~=awful.layout.suit.magnifier and awful.client.focus.filter(c)) then
+						client.focus=c
+					end
+				end)
+			if not startup then
+				if not c.size_hints.user_position and not c.size_hints.program_position then
+					awful.placement.no_overlap(c)
+					awful.placement.no_offscreen(c)
+				end
+			end
+		end)
 
-    if not startup then
-        -- Set the windows at the slave,
-        -- i.e. put it at the end of others instead of setting it master.
-        -- awful.client.setslave(c)
-
-        -- Put windows in a smart way, only if they does not set an initial position.
-        if not c.size_hints.user_position and not c.size_hints.program_position then
-            awful.placement.no_overlap(c)
-            awful.placement.no_offscreen(c)
-        end
-    end
-end)
-
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.add_signal("focus",function(c) c.border_color=beautiful.border_focus end)
+client.add_signal("unfocus",function(c) c.border_color=beautiful.border_normal end)
