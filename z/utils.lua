@@ -4,6 +4,7 @@ local naughty=require("naughty")
 local wibox=wibox
 local string=string
 local type=type
+local ipairs=ipairs
 local table=table
 module("z.utils")
 
@@ -50,4 +51,21 @@ function split(str, pat)
       table.insert(t, cap)
    end
    return t
+end
+
+function has_key(list,key)
+	for idx,k in ipairs(list) do
+		if(k==key) then return true end
+	end
+	return false
+end
+
+function diff(a,b)
+	ret={}
+	--naughty.notify({text="diff..."})
+	for idx,k in ipairs(a) do
+		--naughty.notify({text="in key:"..k})
+		if(not has_key(b,k)) then table.insert(ret,k) end
+	end
+	return ret
 end

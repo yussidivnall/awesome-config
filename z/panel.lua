@@ -36,6 +36,7 @@ function panel.new(args)
 	ret.wibox:set_widget(ret.root_layout)
 	ret.payload={}
 	ret.current_index=1
+	ret.selected=1
 	ret.pop_timer=nil
 	ret.pop_on=false
 	setmetatable(ret,{__index=panel})
@@ -61,9 +62,15 @@ function panel.update(me)
 		local widget_index=i-me.current_index+1
 		if(me.payload[i]~=nil) then
 			--Check type (see todo)
-			me.payload_layout.widgets[widget_index]:set_markup(me.payload[i])
+			if (i==me.selected) then 
+				--me.payload_layout.widgets[widget_index]:set_markup(me.payload[i])
+				
+				me.payload_layout.widgets[widget_index]:set_markup("<span color='red' bgcolor='grey'> "..me.payload[i].."</span>")
+			else
+				me.payload_layout.widgets[widget_index]:set_markup(me.payload[i])
+			end
 		else
-			me.payload_layout.widgets[widget_index]:set_markup(i..": empty")
+			me.payload_layout.widgets[widget_index]:set_markup("-")
 		end
 	end	
 end
@@ -73,6 +80,18 @@ end
 function panel.append(me,element)
 	table.insert(me.payload,element)
 	me:scroll("last")
+end
+
+function panel.selection(me,args)
+	if (args=="down") then 
+		me.selected=me.selected+1
+	end
+	if (args=="up") then
+            me.selected=me.selected-1
+        end
+	me:update()
+	return me.selected
+
 end
 
 ---Scroll the displayed list
@@ -95,7 +114,13 @@ function panel.scroll(me,args)
 		if(me.current_index > 1) then
 			me.current_index=me.current_index-1
 		end
-	else return end
+	else
+		if(args.selected=="down") then 
+			me.selected=me.selected+1
+			me:update()
+		end
+		return 
+	end
 	me:update()
 end
 
@@ -115,12 +140,12 @@ function panel.visible(me) return me.wibox.visible end
 --@param args.timeout the timeout to pop for default 5
 function panel.pop(me,args)
 	local to=args.timeout or me.default_pop_timeout or 5
-	if(me.wibox.visible==true and me.pop_timer_on==false) then return end -- no need to popup
+	if(me.wibox.visible==true and me.pop_on==false) then return end -- no need to popup
 	me:show()
-	me.pop_timer_on=true
+	me.pop_on=true
 	if(me.pop_timer ~=nil) then me.pop_timer:stop() end --stop old timer
 	me.pop_timer=timer({timeout=to})
-	me.pop_timer:connect_signal("timeout",function() me:hide();me.pop_timer_on=false end)
+	me.pop_timer:connect_signal("timeout",function() me:hide();me.pop_on=false end)
 	me.pop_timer:start()
 end
 

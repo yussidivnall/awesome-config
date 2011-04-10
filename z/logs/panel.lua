@@ -7,6 +7,7 @@ local ipairs=ipairs
 local io=io
 local timer=timer
 local wibox=wibox
+local keygrabber=keygrabber
 panel={}
 widget={}
 module("z.logs.panel")
@@ -133,6 +134,18 @@ function set_logs()
 
 end
 
+function key_listener(mod_keys_,key,action)
+	if(key=="DOWN" or key=="k") and action=="press" then
+		panel:scroll("down")
+	end
+	if(key=="UP" or key =="j") and action=="press" then
+		panel:scroll("up")
+	end
+	return true
+end
+
+
+
 --[[ Widget setting ]]--
 function set_widget()
 	if(config.quiet==false) then 
@@ -140,6 +153,7 @@ function set_widget()
 	else
 		widget:set_markup("log:<span color='#aa0000'>off</span>")
 	end
+	return true
 end
 function toggle_widget()
 	config.quiet=not config.quiet
@@ -153,12 +167,18 @@ function init_widget()
 			toggle_widget() 
 		end )
         )
-	widget:add_signal("mouse::enter",function() 
-		naughty.notify({text="mouse::enter"})
+	widget:connect_signal("mouse::enter",function() 
+		keygrabber.run(function(m,k,a) return key_listener(m,k,a) end)
+		panel.pop_on=false
 		panel:show()
+		if(panel.pop_timer~=nil) then
+			if (panel.pop_timer.started==true) then panel.pop_timer:stop()end
+			panel.pop_timer=nil
+		end
 	end)
-	widget:add_signal("mouse::leave",function() 
+	widget:connect_signal("mouse::leave",function() 
 		panel:hide()
+		keygrabber.stop()
 	end)
 end
 
@@ -168,7 +188,7 @@ end
 function init()
 	init_widget()
 
-	panel=z.panel({wibox_params={width=1000},rows=5})
+	panel=z.panel({wibox_params={x=575,y=30,width=700},rows=5})
 	local err_no,errstr
 	inot,err_no,errstr=inotify.init(ture)
 		for name,log in pairs(config.logs) do
