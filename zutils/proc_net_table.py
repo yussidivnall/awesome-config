@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #
 #Takes netstat like data from /proc/net/tcp & udp
-#
+#much quicker then netstat, doesn't host awesome.
 #
 import io;
 class entry:
