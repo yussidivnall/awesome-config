@@ -37,7 +37,8 @@ config.keys.global=awful.util.table.join(
 	awful.key({ config.modkey,	     }, "Return", function() awful.util.spawn(config.terminal) end),
 	awful.key({ config.modkey,	     },"r",function() config.widgets.promptbox:run() end),
 	awful.key({ config.modkey,	     },"x",function() lua_prompt() end),
-
+	--monitor stuff
+	awful.key({ config.modkey,	     },"@",function() z.network.connections.show() end ),
 	--clipboard stuff
 	awful.key({ config.modkey,     	     },"p", function() 
 						    	zapps.clips.next_select()
@@ -45,6 +46,7 @@ config.keys.global=awful.util.table.join(
 	awful.key({ config.modkey,           },"c", function()
                                                         zapps.clips.clip()
                                                     end),
+	
 key({ config.modkey,"Control"  }, "r",awesome.restart),
         awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit)
 )

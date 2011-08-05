@@ -4,12 +4,13 @@ local io=io
 local naughty=naughty
 local ipairs=ipairs
 local table=table
+local utils=z.utils
 module("z.network.connections")
 connections_panel=nil
 listen_panel=nil
 tor_panel=nil
 all_panel=nil
-
+visible=false
 update_timer=nil
 config={}
 config.update_timeout=2
@@ -74,9 +75,10 @@ end
 
 
 function update_connections()
-	
-	t=z.utils.exec(config.commands.connections)
-	t=z.utils.split(t,"\n")
+	f=io.popen(config.commands.connections)
+	t=f:read("*a")
+	f:close()	
+	t=utils.split(t,"\n")
 	connections_dump=t
 --	connections_panel:set_payload({payload=t})
 --	connections_panel:update()
@@ -87,22 +89,29 @@ end
 
 
 function onstart()
+	visible=true
 	connections_panel:show()
 	listening_panel:show()
---	update_connections()
+	update_connections()
 	update_timer:start()
 end
 
 function onstop()
+	visible=false
 	update_timer:stop()
+	connections_panel:hide()
+	listening_panel:hide()
 end
-
+function toggle()
+	if(visible==true) then onstop()
+	else onstart()
+	end
+end
 function init()
 	connections_panel=z.panel({rows=40})
 	listening_panel=z.panel({rows=20,wibox_params={x=100}})
 	update_timer=timer({timeout=config.update_timeout})
 	update_timer:connect_signal("timeout", function() update_connections() end )
-	onstart()
-	
+	toggle()
 end
 init()
