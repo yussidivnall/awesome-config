@@ -8,6 +8,7 @@ beautiful.init("/usr/local/share/awesome/themes/default/theme.lua")
 -- Notification library
 require("naughty")
 require("z")
+require ("zapps")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 local wibox=wibox
@@ -36,7 +37,15 @@ config.keys.global=awful.util.table.join(
 	awful.key({ config.modkey,	     }, "Return", function() awful.util.spawn(config.terminal) end),
 	awful.key({ config.modkey,	     },"r",function() config.widgets.promptbox:run() end),
 	awful.key({ config.modkey,	     },"x",function() lua_prompt() end),
-	awful.key({ config.modkey,"Control"  }, "r",awesome.restart),
+
+	--clipboard stuff
+	awful.key({ config.modkey,     	     },"p", function() 
+						    	zapps.clips.next_select()
+						    end),
+	awful.key({ config.modkey,           },"c", function()
+                                                        zapps.clips.clip()
+                                                    end),
+key({ config.modkey,"Control"  }, "r",awesome.restart),
         awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit)
 )
 config.keys.client=awful.util.table.join(
@@ -172,5 +181,29 @@ client.connect_signal("manage", function (c, startup)
     end
 end)
 
+
+--Tests randmoness follows:
+---------------------------
+--os.execute("xclip -o > /tmp/clip")
+--local f=io.open("/tmp/clip")
+--if(f) then
+--	naughty.notify("File opened!")
+--
+--	io.close(f)
+--end
+--local txt=f:read("*l")
+--zapps.panel_switcher.clip("hlkjhjk")
+zapps.panel_switcher.show_buffer()
+zapps.panel_switcher.handle_paste()
+---------------------------
+--local f=io.popen("xclip -o")
+
+--f:close()
+
+
+
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+
+

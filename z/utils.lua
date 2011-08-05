@@ -69,3 +69,11 @@ function diff(a,b)
 	end
 	return ret
 end
+
+
+function exec(command)
+        local fh = io.popen(command)
+        ret=fh:read("*a")
+        fh:close()
+        return ret
+end
