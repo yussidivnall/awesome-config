@@ -8,6 +8,7 @@ require("z.utils")
 local z=z
 local wibox=wibox
 local timer=timer
+local naughty=naughty
 module("z.panel")
 
 panel={
@@ -35,6 +36,7 @@ function panel.new(args)
 	ret.root_layout:set_middle(ret.payload_layout)
 	ret.wibox:set_widget(ret.root_layout)
 	ret.payload={}
+	ret.actions={}
 	ret.current_index=1
 	ret.selected=1
 	ret.pop_timer=nil
@@ -47,13 +49,38 @@ end
 ---Sets the payload of the panel
 --@param me - a panel context
 --@param args - a table of arguments
---args.payload - a table of strings to use as payload
+--args.payload - a table of strings to use as payloada
+--args.options.payload_type= 'buttons' / 'strings' / 'layouts'
 function panel.set_payload(me,args)
 	if(not args.payload) then return end
-	me.payload=args.payload
+	--Payload of just a list of strings by default
+	if(not args.options) then
+		me.payload=args.payload
+		me:update()
+		return
+	end
+	if(args.options.payload_type=='buttons') then
+		naughty.notify{text='buttons'}	
+	end
+
 	me:update()
 
+
 end
+
+
+function panel.set_actions(me,args)
+	if(not args.actions) then return end
+	me.actions=args.actions
+	me:update()
+
+	for i=mi.current_index,(me.current_index+me.num_rows-1) do
+		widget_index=i-me.current_index+1
+	end
+end
+
+
+
 ---Updates the displayed widgets list
 --@TODO check the type of payload element, and modify the widget accordingly
 --Ath the moment only accepts a table of strings as payload

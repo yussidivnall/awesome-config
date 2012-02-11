@@ -53,21 +53,34 @@ function color(color,text)
 	--ret=""..text.."</span>"
 	return ret
 end
+function paint_established(conn)
+	ret=""
+	if(conn.src_port==443) then
+		ret="<span color='red'> https://"..conn.src_ip.." "..conn.src_port.."</span>"
+	else
+		ret="<span color='white'>"..conn.src_ip.." "..conn.src_port.."</span>"
+	end
+	return ret
+end
+
 
 function display()
-	local all_list={}
-	local listen_list={}
-	local established_list={}
-	table.insert(listen_list,"listening")
-	table.insert(established_list,"established")
-	table.insert(all_list,"other")
+	local all_list={'other'}
+	local listen_list={'listening'}
+	local established_list={'established'}
+	local tor_list={'tor'}
 	for idx,con in ipairs(all_connections) do 
 		if(con.state=='LISTEN') then
+			established
 			table.insert(listen_list,color(config.colors.STATE_LISTEN,con.src_port.."	"..con.src_ip))
+                elseif (con.src_port == '8118' or con.dest_port=='8118' or con.src_port=='9050' or con.dest_port=='9050') then
+                        table.insert(tor_list,color('green',con.src_ip..":"..con.src_port.."     "..con.dest_ip..":"..con.dest_port))
 		elseif (con.state=='ESTABLISHED') then
-			table.insert(established_list,color(config.colors.STATE_ESTABLISHED,con.src_port.."	"..con.dest_ip..":"..con.dest_port))
+			txt=paint_established(con)
+			table.insert(established_list,txt)
+			--table.insert(established_list,color(config.colors.STATE_ESTABLISHED,con.src_port.."	"..con.dest_ip..":"..con.dest_port))
 		else
-			table.insert(all_list , con.src_ip.."   "..con.dest_ip.."       "..con.state)
+			table.insert(all_list , con.src_ip..":"..con.src_port.."   "..con.dest_ip.."       "..con.state)
 		end
 		
 		--table.insert(all_list , con.src_ip.."	"..con.dest_ip.."	"..con.state)
@@ -79,6 +92,8 @@ function display()
 	connections_panel:update()
 	established_panel:set_payload({payload=established_list})
 	established_panel:update()
+	tor_panel:set_payload({payload=tor_list})
+	tor_panel:update()
 end
 
 function populate()
@@ -115,6 +130,7 @@ function onstart()
 	connections_panel:show()
 	listening_panel:show()
 	established_panel:show()
+	tor_panel:show()
 	update_connections()
 	update_timer:start()
 end
@@ -125,6 +141,7 @@ function onstop()
 	connections_panel:hide()
 	established_panel:hide()
 	listening_panel:hide()
+	tor_panel:hide()
 end
 function toggle()
 	if(visible==true) then onstop()
@@ -132,9 +149,13 @@ function toggle()
 	end
 end
 function init()
+	--Newer...
+	est_panel=z.network.network_panel()
+	--old ...
 	connections_panel=z.panel({rows=40})
 	listening_panel=z.panel({rows=20,wibox_params={x=100}})
 	established_panel=z.panel({rows=20,wibox_params={x=100,y=200}})
+	tor_panel=z.panel({rows=15,wibox_params={x=200, width=300}})
 	update_timer=timer({timeout=config.update_timeout})
 	update_timer:connect_signal("timeout", function() update_connections() end )
 	toggle()

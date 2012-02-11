@@ -74,6 +74,18 @@ config.widgets.systray=wibox.widget.systray()
 config.widgets.promptbox=awful.widget.prompt()
 config.widgets.tags={}
 config.widgets.tasks={}
+config.widgets.networkalertmenu={
+	{"toggle background capture", "xterm"}
+}
+config.widgets.alertmenu= awful.menu({ items = {
+                                    { "network", config.widgets.networkalertmenu,beautiful.awesome_icon},
+                                  }
+                        })
+config.widgets.alertmenulauncher= awful.widget.launcher({ image = beautiful.awesome_icon,
+                                     menu = config.widgets.alertmenu})
+
+
+
 config.multiple_screens="duplicate"
 
 function lua_prompt()

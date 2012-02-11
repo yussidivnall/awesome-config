@@ -1,5 +1,6 @@
 require("z.utils")
 require("z.panel")
+require("z.zanel")
 require("z.network")
 require("z.network.connections")
 require("z.logs")
