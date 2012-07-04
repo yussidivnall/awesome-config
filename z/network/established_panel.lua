@@ -3,6 +3,7 @@ module('z.network.established_panel')
 local panel={}
 
 function new(args)
+	naughty.notify({text="hi"});
 	ret={}
         setmetatable(ret,{__index=panel})
         return ret

@@ -71,7 +71,7 @@ function display()
 	local tor_list={'tor'}
 	for idx,con in ipairs(all_connections) do 
 		if(con.state=='LISTEN') then
-			established
+			--established
 			table.insert(listen_list,color(config.colors.STATE_LISTEN,con.src_port.."	"..con.src_ip))
                 elseif (con.src_port == '8118' or con.dest_port=='8118' or con.src_port=='9050' or con.dest_port=='9050') then
                         table.insert(tor_list,color('green',con.src_ip..":"..con.src_port.."     "..con.dest_ip..":"..con.dest_port))
@@ -150,7 +150,7 @@ function toggle()
 end
 function init()
 	--Newer...
-	est_panel=z.network.network_panel()
+	--est_panel=z.network.network_panel()
 	--old ...
 	connections_panel=z.panel({rows=40})
 	listening_panel=z.panel({rows=20,wibox_params={x=100}})
@@ -158,6 +158,6 @@ function init()
 	tor_panel=z.panel({rows=15,wibox_params={x=200, width=300}})
 	update_timer=timer({timeout=config.update_timeout})
 	update_timer:connect_signal("timeout", function() update_connections() end )
-	toggle()
+--	toggle()
 end
 init()

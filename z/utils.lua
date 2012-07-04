@@ -1,7 +1,7 @@
 local io=io
 local awful=require("awful")
 local naughty=require("naughty")
-local wibox=wibox
+local wibox=require("awful.wibox")
 local string=string
 local type=type
 local ipairs=ipairs
@@ -77,3 +77,28 @@ function exec(command)
         fh:close()
         return ret
 end
+
+function ror(instance)
+        local clients = client.get()
+        for i, c in pairs(clients) do
+--                dbg(i)
+--                dbg("name:"..c.name.."          class:"..c.class.."     type:"..type(c))
+                dbg(c.instance)
+                if(c.instance==instance) then
+                        local curtag = awful.tag.selected()
+                        awful.client.movetotag(curtag, c)
+                        c:raise()
+                        c.ontop=true
+                        client.focus = c
+
+                        return
+                end
+        end
+        awful.util.spawn(instance)
+
+end
+
+function dbg(s)
+        naughty.notify({text=s,timeout=15})
+end
+

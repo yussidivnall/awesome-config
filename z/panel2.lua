@@ -6,9 +6,9 @@ local table=table
 require("z.utils")
 --local utilz=require("z.utils")
 local z=z
-local wibox=require("wibox")
+local wibox=wibox
 local timer=timer
-local naughty=require("naughty")
+local naughty=naughty
 module("z.panel")
 
 panel={
@@ -50,7 +50,7 @@ end
 --@param me - a panel context
 --@param args - a table of arguments
 --args.payload - a table of strings to use as payloada
---args.options.payload_type= 'buttons' / 'strings' / 'layouts'
+--args.options.payload_type= 'buttons' / 'strings' / 'layouts' / 'menu'
 function panel.set_payload(me,args)
 	if(not args.payload) then return end
 	--Payload of just a list of strings by default
@@ -83,7 +83,7 @@ end
 
 ---Updates the displayed widgets list
 --@TODO check the type of payload element, and modify the widget accordingly
---Ath the moment only accepts a table of strings as payload
+--Atm the moment only accepts a table of strings as payload
 function panel.update(me)
 	for i=me.current_index,(me.current_index+me.num_rows-1) do
 		local widget_index=i-me.current_index+1
@@ -91,7 +91,8 @@ function panel.update(me)
 			--Check type (see todo)
 			if (i==me.selected) then 
 				--me.payload_layout.widgets[widget_index]:set_markup(me.payload[i])
-				
+				--to check payload type here, instead...
+				if(me.payload_type ==nil or me.payload_type=="STRING") then end		
 				me.payload_layout.widgets[widget_index]:set_markup("<span color='red' bgcolor='grey'> "..me.payload[i].."</span>")
 			else
 				me.payload_layout.widgets[widget_index]:set_markup(me.payload[i])

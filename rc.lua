@@ -1,18 +1,18 @@
 -- Standard awesome library
-require("awful")
+local awful = require("awful")
 require("awful.autofocus")
 require("awful.rules")
 -- Theme handling library
-require("beautiful")
+local beautiful = require("beautiful")
 beautiful.init("/usr/local/share/awesome/themes/default/theme.lua")
 -- Notification library
-require("naughty")
-require("z")
-require ("zapps")
+local naughty = require("naughty")
+local z = require("z")
+local zapps = require ("zapps")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-local wibox=wibox
-local widget=wibox.widget
+--local wibox=z.wibox()
+--local widget=z.wibox.widget
 config={}
 if (screen.count() ==1) then
 	config.screen=1
@@ -38,7 +38,7 @@ config.keys.global=awful.util.table.join(
 	awful.key({ config.modkey,	     },"r",function() config.widgets.promptbox:run() end),
 	awful.key({ config.modkey,	     },"x",function() lua_prompt() end),
 	--monitor stuff
-	awful.key({ config.modkey,	     },"@",function() z.network.connections.show() end ),
+	awful.key({ config.modkey,	     },"@",function() z.network.connections.toggle() end ),
 	--clipboard stuff
 	awful.key({ config.modkey,     	     },"p", function() 
 						    	zapps.clips.next_select()
@@ -79,7 +79,7 @@ config.widgets.networkalertmenu={
 }
 config.widgets.alertmenu= awful.menu({ items = {
                                     { "network", config.widgets.networkalertmenu,beautiful.awesome_icon},
-                                  }
+                                    }
                         })
 config.widgets.alertmenulauncher= awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = config.widgets.alertmenu})
@@ -207,8 +207,8 @@ end)
 --end
 --local txt=f:read("*l")
 --zapps.panel_switcher.clip("hlkjhjk")
-zapps.panel_switcher.show_buffer()
-zapps.panel_switcher.handle_paste()
+--zapps.panel_switcher.show_buffer()
+--zapps.panel_switcher.handle_paste()
 ---------------------------
 --local f=io.popen("xclip -o")
 
