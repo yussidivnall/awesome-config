@@ -1,18 +1,20 @@
 -- Standard awesome library
 local awful = require("awful")
 require("awful.autofocus")
-require("awful.rules")
+awful.rules=require("awful.rules")
 -- Theme handling library
 local beautiful = require("beautiful")
 beautiful.init("/usr/local/share/awesome/themes/default/theme.lua")
 -- Notification library
 local naughty = require("naughty")
 local z = require("z")
-local zapps = require ("zapps")
+local wibox=require("wibox")
+--local zapps = require ("zapps")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 --local wibox=z.wibox()
 --local widget=z.wibox.widget
+naughty.notify({text="This is the correct file, WTF?"})
 config={}
 if (screen.count() ==1) then
 	config.screen=1
@@ -28,6 +30,8 @@ config.layouts={
 	awful.layout.suit.max,
 }
 config.keys={}
+
+naughty.notify({text="This is the correct file, WTF?"})
 config.keys.global=awful.util.table.join(
 	awful.key({ config.modkey,           }, "Up",   awful.tag.viewnext	  ),
 	awful.key({ config.modkey,           }, "Down",   awful.tag.viewprev      ),
@@ -38,17 +42,17 @@ config.keys.global=awful.util.table.join(
 	awful.key({ config.modkey,	     },"r",function() config.widgets.promptbox:run() end),
 	awful.key({ config.modkey,	     },"x",function() lua_prompt() end),
 	--monitor stuff
-	awful.key({ config.modkey,	     },"@",function() z.network.connections.toggle() end ),
+	awful.key({ config.modkey,	     },"z",function() z.network.connections.toggle() end ),
 	--clipboard stuff
-	awful.key({ config.modkey,     	     },"p", function() 
-						    	zapps.clips.next_select()
-						    end),
-	awful.key({ config.modkey,           },"c", function()
-                                                        zapps.clips.clip()
-                                                    end),
+--	awful.key({ config.modkey,     	     },"p", function() 
+--						    	zapps.clips.next_select()
+--						    end),
+--	awful.key({ config.modkey,           },"c", function()
+  --                                                      zapps.clips.clip()
+    --                                                end),
 	
-key({ config.modkey,"Control"  }, "r",awesome.restart),
-        awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit)
+    awful.key({ config.modkey,"Control"  }, "r",awesome.restart),
+    awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit)
 )
 config.keys.client=awful.util.table.join(
 	awful.key({ config.modkey,	     },"q", function(c) c:kill() end),
@@ -70,7 +74,7 @@ config.tags={}
 
 config.widgets={}
 config.widgets.text_clock=awful.widget.textclock()
-config.widgets.systray=wibox.widget.systray()
+--config.widgets.systray=wibox.widget.systray()
 config.widgets.promptbox=awful.widget.prompt()
 config.widgets.tags={}
 config.widgets.tasks={}
@@ -146,7 +150,7 @@ if (screen.count()==1) then
 	left_widgets:add(config.widgets.tasks)
 	local right_widgets=wibox.layout.fixed.horizontal()
 	right_widgets:add(config.widgets.text_clock)
-	right_widgets:add(config.widgets.systray)
+--	right_widgets:add(config.widgets.systray)
 	right_widgets:add(z.logs.panel.widget)
 	local horizontal_widgets=wibox.layout.align.horizontal()
 	horizontal_widgets:set_left(left_widgets)

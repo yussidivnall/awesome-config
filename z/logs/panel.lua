@@ -1,4 +1,3 @@
-local z=z
 local inotify=require("inotify")
 local naughty=require("naughty")
 local awful=require("awful")
@@ -7,11 +6,11 @@ local ipairs=ipairs
 local io=io
 local timer=timer
 local wibox=require("wibox")
-local keygrabber=keygrabber
+local keygrabber=require("keygrabber")
+local z=z
+module("z.logs.panel")
 panel={}
 widget={}
-module("z.logs.panel")
-
 config={}
 config.logs={
         auth={
@@ -168,7 +167,8 @@ function init_widget()
 		end )
         )
 	widget:connect_signal("mouse::enter",function() 
-		keygrabber.run(function(m,k,a) return key_listener(m,k,a) end)
+		naughty.notify({text="over"})
+        keygrabber.run(function(m,k,a) return key_listener(m,k,a) end)
 		panel.pop_on=false
 		panel:show()
 		if(panel.pop_timer~=nil) then
@@ -194,7 +194,7 @@ function init()
 		for name,log in pairs(config.logs) do
                 	set_logs(name)
                 	log.wd,err_no,err_str=inot:add_watch(log.file,{"IN_MODIFY"})
-        	end
+        end
         local tmr=timer({timeout=config.update_time})
         tmr:connect_signal("timeout",function() watch_logs() end)
         tmr:start()

@@ -1,10 +1,10 @@
 local z=z
 local timer=timer
 local io=io
-local naughty=naughty
+local naughty=require("naughty")
 local ipairs=ipairs
 local table=table
-local utils=z.utils
+local utils=require("z.utils")
 module("z.network.connections")
 connections_panel=nil
 listen_panel=nil
@@ -18,7 +18,7 @@ update_timer=nil
 config={}
 config.update_timeout=2
 config.commands={}
-config.commands.connections="/home/volcan/.config/awesome/testing/zutils/proc_net_table.py"
+config.commands.connections="/home/volcan/.config/awesome/zutils/proc_net_table.py"
 config.colors={
 	STATE_LISTEN='blue',
 	STATE_ESTABLISHED='red',
@@ -77,8 +77,8 @@ function display()
                         table.insert(tor_list,color('green',con.src_ip..":"..con.src_port.."     "..con.dest_ip..":"..con.dest_port))
 		elseif (con.state=='ESTABLISHED') then
 			txt=paint_established(con)
-			table.insert(established_list,txt)
-			--table.insert(established_list,color(config.colors.STATE_ESTABLISHED,con.src_port.."	"..con.dest_ip..":"..con.dest_port))
+			--table.insert(established_list,txt)
+			table.insert(established_list,color(config.colors.STATE_ESTABLISHED,con.src_port.."	"..con.dest_ip..":"..con.dest_port))
 		else
 			table.insert(all_list , con.src_ip..":"..con.src_port.."   "..con.dest_ip.."       "..con.state)
 		end
@@ -149,13 +149,10 @@ function toggle()
 	end
 end
 function init()
-	--Newer...
-	--est_panel=z.network.network_panel()
-	--old ...
-	connections_panel=z.panel({rows=40})
-	listening_panel=z.panel({rows=20,wibox_params={x=100}})
-	established_panel=z.panel({rows=20,wibox_params={x=100,y=200}})
-	tor_panel=z.panel({rows=15,wibox_params={x=200, width=300}})
+	connections_panel=z.panel({rows=40,wibox_params={x=1075,y=225,opacity=0.9}})
+	listening_panel=z.panel({rows=20,wibox_params={x=1075,height=200,opacity=0.9}})
+	established_panel=z.panel({rows=40,wibox_params={x=0,y=225,opacity=0.9}})
+	tor_panel=z.panel({rows=15,wibox_params={x=0,height=200,opacity=0.9}})
 	update_timer=timer({timeout=config.update_timeout})
 	update_timer:connect_signal("timeout", function() update_connections() end )
 --	toggle()

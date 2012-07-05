@@ -1,7 +1,7 @@
 local io=io
 local awful=require("awful")
 local naughty=require("naughty")
-local wibox=require("awful.wibox")
+local wibox=require("wibox")
 local string=string
 local type=type
 local ipairs=ipairs
@@ -23,8 +23,8 @@ function new_wibox(args)
         local w=args.width or 200
         local h=args.height or 200
         local s = args.screen or 1
-	local v = args.visible or false
-	local o = args.opacity or 0.6
+	    local v = args.visible or false
+	    local o = args.opacity or 0.6
         local ret = wibox({fg="#ffffff", bg="#000000",border_color="#0a0ba9", border_width=2 })
         ret.opacity=o
         ret.ontop=true

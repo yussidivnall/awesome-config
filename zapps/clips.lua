@@ -1,5 +1,5 @@
 naughty=require("naughty")
-utils=require("utilz")
+local utils=require("z.utils")
 z=require("z")
 io=require("io")
 table = require("table")
@@ -9,7 +9,6 @@ local string =string
 local io=io
 local z=z
 local naughty=naughty
-local utilz=utilz
 local table=table
 local keygrabber=keygrabber
 module("zapps.clips")
