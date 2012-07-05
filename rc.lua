@@ -1,14 +1,13 @@
--- Standard awesome library
-local awful = require("awful")
-require("awful.autofocus")
-awful.rules=require("awful.rules")
--- Theme handling library
 local beautiful = require("beautiful")
-beautiful.init("/usr/local/share/awesome/themes/default/theme.lua")
--- Notification library
+local awful = require("awful")
+awful.rules = require("awful.rules")
+require("awful.autofocus")
+local wibox = require("wibox")
 local naughty = require("naughty")
+local menubar = require("menubar")
+beautiful.init("/usr/local/share/awesome/themes/default/theme.lua")
 local z = require("z")
-local wibox=require("wibox")
+local widgets_box=require("widgets_box")
 --local zapps = require ("zapps")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
@@ -22,6 +21,10 @@ else
 	config.screen=2
 end
 config.terminal="rxvt-unicode"
+config.consoles={}
+config.konsole=nil
+config.konsole_ontop=false
+
 config.modkey="Mod4"
 config.layouts={
 	awful.layout.suit.floating,
@@ -30,19 +33,19 @@ config.layouts={
 	awful.layout.suit.max,
 }
 config.keys={}
-
-naughty.notify({text="This is the correct file, WTF?"})
 config.keys.global=awful.util.table.join(
-	awful.key({ config.modkey,           }, "Up",   awful.tag.viewnext	  ),
-	awful.key({ config.modkey,           }, "Down",   awful.tag.viewprev      ),
-	awful.key({ config.modkey,	     }, "Left",  function() switch_client("next") end ),
-	awful.key({ config.modkey,	     }, "Right", function() switch_client("prev") end ),
-	awful.key({ config.modkey,	     }, "space",function() awful.layout.inc(config.layouts,1);naughty.notify({text=awful.layout.get(screen):getname()}) end),
+	awful.key({ config.modkey,       }, "Up",   awful.tag.viewnext	  ),
+	awful.key({ config.modkey,       }, "Down",   awful.tag.viewprev      ),
+	awful.key({ config.modkey,       }, "Left",  function() switch_client("next") end ),
+	awful.key({ config.modkey,       }, "Right", function() switch_client("prev") end ),
+    awful.key({ config.modkey,       },"z",function() z.network.connections.toggle() end ),
+	awful.key({ config.modkey,       }, "space",function() awful.layout.inc(config.layouts,1);naughty.notify({text=awful.layout.get(screen):getname()}) end),
 	awful.key({ config.modkey,	     }, "Return", function() awful.util.spawn(config.terminal) end),
 	awful.key({ config.modkey,	     },"r",function() config.widgets.promptbox:run() end),
 	awful.key({ config.modkey,	     },"x",function() lua_prompt() end),
-	--monitor stuff
-	awful.key({ config.modkey,	     },"z",function() z.network.connections.toggle() end ),
+    awful.key({ config.modkey,       }, "s", function() tstog(); end), -- toggle tshark
+    awful.key({ config.modkey,       }, "k", function() ktog();end), --toggle konsole
+    awful.key({ config.modkey,       }, "d", function() tog("dmesg");end), --toggle dmesg
 	--clipboard stuff
 --	awful.key({ config.modkey,     	     },"p", function() 
 --						    	zapps.clips.next_select()
@@ -50,7 +53,7 @@ config.keys.global=awful.util.table.join(
 --	awful.key({ config.modkey,           },"c", function()
   --                                                      zapps.clips.clip()
     --                                                end),
-	
+    awful.key({ config.modkey,           }, "a",function() widgets_box.toggle() end),
     awful.key({ config.modkey,"Control"  }, "r",awesome.restart),
     awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit)
 )
@@ -93,16 +96,16 @@ config.widgets.alertmenulauncher= awful.widget.launcher({ image = beautiful.awes
 config.multiple_screens="duplicate"
 
 function lua_prompt()
-		awful.prompt.run({prompt="lua >"},
-		config.widgets.promptbox.widget,
-		awful.util.eval,nil,
-		awful.util.getdir("cache").."/history_eval")
+    awful.prompt.run({prompt="lua >"},
+    config.widgets.promptbox.widget,
+    awful.util.eval,nil,
+    awful.util.getdir("cache").."/history_eval")
 end
 function maximize_client(c)
-            c.maximized_horizontal = not c.maximized_horizontal
-            c.maximized_vertical   = not c.maximized_vertical
-	    c.ontop=true
-	    c.focus=true
+    c.maximized_horizontal = not c.maximized_horizontal
+    c.maximized_vertical   = not c.maximized_vertical
+    c.ontop=true
+    c.focus=true
 end
 function float_client(c,args)
 	awful.client.floating.toggle(c)
@@ -138,7 +141,7 @@ end
 
 
 if (screen.count()==1) then
-	config.tags[1]=get_default_tags({screen=1,tags={"main","www","test1","test2","test3"}})
+	config.tags[1]=get_default_tags({screen=1,tags={"main","www","test1","test2","test3","I","AM","SICK","OF","THIS"}})
 	config.widgets.tags=awful.widget.taglist(1,awful.widget.taglist.filter.all,config.mouse.tags)
 	config.widgets.tasks=awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags,{})
 	config.topbar_wibox={}
@@ -165,7 +168,6 @@ else
 end
 
 root.keys(config.keys.global)
-
 awful.rules.rules = {
 	{ rule = { },
 	properties= { 
@@ -174,8 +176,47 @@ awful.rules.rules = {
                 focus = true,
 		keys=config.keys.client,
 		buttons = config.mouse.client
-	}}
-}
+	}},
+	{ rule={ name="^Gnuplot"},
+	properties={
+--		x=880,
+--		y=20,
+		floating=true,
+		ontop=true,
+--		width=400,
+--		height=300
+		},
+	callback=function(c) 
+		naughty.notify({text="Hey:"})
+		c:geometry({x=880,y=20,width=400,height=300})
+		--awful.client.floating.set(c,true)
+		--c:ontop(true)
+	end
+	} ,
+	{ rule ={  name="konsole" },
+	  properties={
+		floating=true,
+		ontop=true,
+		width=1280,
+		height=100,
+		x=0,y=1180,
+	   },
+           callback=function(c) 
+		naughty.notify({text="Matched konsole rule"})
+		c:geometry({x=0,y=700,width=1280,height=100} )
+		config.konsole=c
+		end
+	},
+--	{ rule ={},properties={},callback=function(c) end},
+	{ rule ={ name="shark"},
+	properties={
+		floating=true,
+		ontop=true
+	},
+	callback=function(c) 
+		c:geometry({x=0,y=400,width=1280,height=400} )
+	end}
+}	
 
 client.connect_signal("manage", function (c, startup)
     -- Enable sloppy focus
@@ -222,6 +263,70 @@ end)
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+
+kons_ontop=false
+kons=""
+
+function ror(instance)
+    local clients = client.get()
+    for i, c in pairs(clients) do
+        dbg(c.instance)
+        if(c.instance==instance) then
+            local curtag = awful.tag.selected()
+            awful.client.movetotag(curtag, c)
+			c:raise()
+			c.ontop=true
+			client.focus = c
+            return
+        end
+    end
+	awful.util.spawn(instance)
+end
+
+function hide(instance)
+	local clients = client.get()
+	for i,c in pairs(clients) do 
+		if(c.instance==instance) then
+			c:lower()
+			c.visible=false
+			c.selected=false
+			c.ontop=false
+			c.minimized=true
+		end
+	end
+end
+
+--toggles the "konsole" - the game like consle
+konsole_visible=false;
+function ktog()
+	konsole_visible=not konsole_visible; 
+	if(konsole_visible) then
+		ror("konsole");
+	else
+		hide("konsole");
+	end
+end
+--toggles the tshark capture
+tshark_visible=false
+function tstog()
+	tshark_visible= not tshark_visible;
+	if (tshark_visible) then
+		ror("shark");
+	else 
+		hide("shark");
+	end
+	
+end
+
+
+function tog(cmd)
+	ror(cmd);
+end
+
+
+function dbg(s)
+	naughty.notify({text=s,timeout=15})
+end
 
 
 

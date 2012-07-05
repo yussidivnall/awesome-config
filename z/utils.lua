@@ -29,7 +29,7 @@ function new_wibox(args)
         ret.opacity=o
         ret.ontop=true
         ret:geometry({ width=w,height=h,x=X,y=Y })
-	ret.visible=v
+    	ret.visible=v
         ret.screen=s
         return ret
 end
