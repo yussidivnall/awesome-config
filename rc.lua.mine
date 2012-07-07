@@ -34,11 +34,12 @@ beautiful.init("/home/volcan/.config/awesome/theme/theme.lua")
 local z = require("z")
 local widgets_box=require("widgets_box")
 --local shifty=require("shifty")
-local zapps = require ("zapps")
+--local zapps = require ("zapps")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 --local wibox=z.wibox()
 --local widget=z.wibox.widget
+naughty.notify({text="This is the correct file, WTF?"})
 local config={}
 if (screen.count() ==1) then
 	config.screen=1
@@ -71,7 +72,6 @@ config.keys.global=awful.util.table.join(
     awful.key({ config.modkey,       }, "s", function() tstog(); end), -- toggle tshark
     awful.key({ config.modkey,       }, "k", function() ktog();end), --toggle konsole
     awful.key({ config.modkey,       }, "d", function() tog("dmesg");end), --toggle dmesg
-    awful.key({ config.modkey,       }, "e", function() tog("icedove");end), --toggle dmesg
 	--clipboard stuff
 --	awful.key({ config.modkey,     	     },"p", function() 
 --						    	zapps.clips.next_select()
@@ -104,7 +104,11 @@ config.tags={}
 config.widgets={}
 config.widgets.text_clock=awful.widget.textclock()
 
-config.widgets.systray=wibox.widget.systray()
+mytextclock=awful.widget.textclock()
+mytextclock:connect_signal("mouse::enter", function() print("enter") end)
+mytextclock:connect_signal("mouse::leave", function() print("leave") end)
+
+--config.widgets.systray=wibox.widget.systray()
 config.widgets.promptbox=awful.widget.prompt()
 config.widgets.tags={}
 config.widgets.tasks={}
@@ -176,7 +180,8 @@ if (screen.count()==1) then
 	left_widgets:add(config.widgets.tasks)
 	local right_widgets=wibox.layout.fixed.horizontal()
 	right_widgets:add(config.widgets.text_clock)
-	right_widgets:add(config.widgets.systray)
+	right_widgets:add(mytextclock)
+--	right_widgets:add(config.widgets.systray)
 	right_widgets:add(z.logs.panel.widget)
 	local horizontal_widgets=wibox.layout.align.horizontal()
 	horizontal_widgets:set_left(left_widgets)
