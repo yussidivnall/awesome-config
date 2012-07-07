@@ -20,9 +20,9 @@ selection=1
 
 function next_select()
 	selection=selection+1
-
 	if (selection > #panels) then selection =1 end
 	buffer_panel.selected=selection
+    if not panels[selection] then return end
 	buffer_panel:pop({})
 	buffer_panel:update()
 	hideboard()
@@ -87,7 +87,7 @@ function clip()
 		if (f) then
 			local txt=f:read("*a")
 			f:close()
-			local clipboard=utilz.split(txt,"\n")
+			local clipboard=utils.split(txt,"\n")
 			p = get_panel()
 			p:set_payload({payload=clipboard})
 			p:update()

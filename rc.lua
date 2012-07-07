@@ -64,21 +64,16 @@ config.keys.global=awful.util.table.join(
 	awful.key({ config.modkey,       }, "Left",  function() switch_client("next") end ),
 	awful.key({ config.modkey,       }, "Right", function() switch_client("prev") end ),
     awful.key({ config.modkey,       },"z",function() z.network.connections.toggle() end ),
-	awful.key({ config.modkey,       }, "space",function() awful.layout.inc(config.layouts,1);naughty.notify({text=awful.layout.get(screen):getname()}) end),
+	awful.key({ config.modkey,       }, "space",function() awful.layout.inc(config.layouts,1) end),
 	awful.key({ config.modkey,	     }, "Return", function() awful.util.spawn(config.terminal) end),
 	awful.key({ config.modkey,	     },"r",function() config.widgets.promptbox:run() end),
 	awful.key({ config.modkey,	     },"x",function() lua_prompt() end),
     awful.key({ config.modkey,       }, "s", function() tstog(); end), -- toggle tshark
     awful.key({ config.modkey,       }, "k", function() ktog();end), --toggle konsole
     awful.key({ config.modkey,       }, "d", function() tog("dmesg");end), --toggle dmesg
-    awful.key({ config.modkey,       }, "e", function() tog("icedove");end), --toggle dmesg
 	--clipboard stuff
---	awful.key({ config.modkey,     	     },"p", function() 
---						    	zapps.clips.next_select()
---						    end),
---	awful.key({ config.modkey,           },"c", function()
-  --                                                      zapps.clips.clip()
-    --                                                end),
+	awful.key({ config.modkey,     	     },"v", function() zapps.clips.next_select() end),
+	awful.key({ config.modkey,           },"c", function() zapps.clips.clip() end),
     awful.key({ config.modkey,           }, "a",function() widgets_box.toggle() end),
     awful.key({ config.modkey,"Control"  }, "r",awesome.restart),
     awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit)
@@ -350,6 +345,3 @@ end
 function dbg(s)
 	naughty.notify({text=s,timeout=15})
 end
-
-
-
