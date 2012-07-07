@@ -167,7 +167,6 @@ function init_widget()
 		end )
         )
 	widget:connect_signal("mouse::enter",function() 
-		naughty.notify({text="over"})
         keygrabber.run(function(m,k,a) return key_listener(m,k,a) end)
 		panel.pop_on=false
 		panel:show()

@@ -5,7 +5,7 @@ require("awful.autofocus")
 local wibox = require("wibox")
 local naughty = require("naughty")
 local menubar = require("menubar")
-
+--require("eminent")
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -81,6 +81,7 @@ config.keys.global=awful.util.table.join(
 config.keys.client=awful.util.table.join(
 	awful.key({ config.modkey,	     },"q", function(c) c:kill() end),
 	awful.key({ config.modkey,	     },"m", function(c) maximize_client(c) end),
+	awful.key({ config.modkey,	     },"w", function(c) fullscreen_client(c) end),
 	awful.key({ config.modkey,	     },"k", function(c) float_client(c,{}) end)
 )
 
@@ -129,6 +130,10 @@ function maximize_client(c)
     c.ontop=true
     c.focus=true
 end
+function fullscreen_client(c)
+    c.fullscreen = not c.fullscreen
+end
+
 function float_client(c,args)
 	awful.client.floating.toggle(c)
 	if(args=={}) then 
@@ -187,16 +192,16 @@ end
 
 root.keys(config.keys.global)
 awful.rules.rules = {
-	{ rule = { },
-	properties= { 
-		border_width = beautiful.border_width,
-                border_color = beautiful.border_normal,
-                focus = true,
-		keys=config.keys.client,
-		buttons = config.mouse.client
-	}},
-	{ rule={ name="^Gnuplot"},
-	properties={
+    { rule = { },
+    properties= { 
+        border_width = beautiful.border_width,
+        border_color = beautiful.border_normal,
+        focus = true,
+        keys=config.keys.client,
+        buttons = config.mouse.client
+    }},
+    { rule={ name="^Gnuplot"},
+      properties={
 --		x=880,
 --		y=20,
 		floating=true,
@@ -205,7 +210,6 @@ awful.rules.rules = {
 --		height=300
 		},
 	callback=function(c) 
-		naughty.notify({text="Hey:"})
 		c:geometry({x=880,y=20,width=400,height=300})
 		--awful.client.floating.set(c,true)
 		--c:ontop(true)
@@ -219,8 +223,8 @@ awful.rules.rules = {
 		height=100,
 		x=0,y=1180,
 	   },
-           callback=function(c) 
-		naughty.notify({text="Matched konsole rule"})
+       callback=function(c) 
+	    naughty.notify({text="Matched konsole rule"})
 		c:geometry({x=0,y=700,width=1280,height=100} )
 		config.konsole=c
 		end
@@ -288,7 +292,6 @@ kons=""
 function ror(instance)
     local clients = client.get()
     for i, c in pairs(clients) do
-        dbg(c.instance)
         if(c.instance==instance) then
             local curtag = awful.tag.selected()
             awful.client.movetotag(curtag, c)
@@ -342,6 +345,6 @@ function tog(cmd)
 end
 
 
-function dbg(s)
+function msg(s)
 	naughty.notify({text=s,timeout=15})
 end
