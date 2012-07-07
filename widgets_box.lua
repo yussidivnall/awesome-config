@@ -15,8 +15,11 @@ function graph_widget()
     return ret
 end
 
-
-
+--[[
+ mytextbox:buttons(awful.util.table.join(
+   awful.button({ }, 1, function () awful.util.spawn("echo Left mouse button pressed.") end)
+ ))
+]]--
 
 function add_widgets()
     local root_layout=wibox.layout.align.vertical()
@@ -24,6 +27,10 @@ function add_widgets()
 
     --Memory stuff
     local mem_text_widget=wibox.widget.textbox({})
+
+    mem_text_widget:buttons(awful.util.table.join(
+       awful.button({ }, 1, function () awful.util.spawn("echo Left mouse button pressed.") end)
+     ))
     vicious.register(mem_text_widget, vicious.widgets.mem, "Memory:<span color='red'> $1% ($2MB/$3MB) </span>", 10)
     local mem_graph_widget=graph_widget()
     vicious.register(mem_graph_widget, vicious.widgets.mem, "$1", 1)
