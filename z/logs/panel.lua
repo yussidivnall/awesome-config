@@ -122,7 +122,8 @@ function set_logs()
         for name,log in pairs(config.logs) do
                 local log=config.logs[name];
                 
-		local f=io.open(log.file)
+		        local f=io.open(log.file)
+                if(f==nil)then break end --In case the logfile doesn't exist
                 local t=f:read("*a")
                 f:close()
                 config.logs[name].length=#t

@@ -82,7 +82,8 @@ config.keys.client=awful.util.table.join(
 	awful.key({ config.modkey,	     },"q", function(c) c:kill() end),
 	awful.key({ config.modkey,	     },"m", function(c) maximize_client(c) end),
 	awful.key({ config.modkey,	     },"w", function(c) fullscreen_client(c) end),
-	awful.key({ config.modkey,	     },"k", function(c) float_client(c,{}) end)
+	awful.key({ config.modkey,	     },"f", function(c) float_client(c,{}) end),
+	awful.key({ config.modkey,	     },"t", function(c) top_client(c) end)
 )
 
 config.mouse={}
@@ -132,6 +133,8 @@ function maximize_client(c)
 end
 function fullscreen_client(c)
     c.fullscreen = not c.fullscreen
+--    c.ontop=true
+--    c.focus=true
 end
 
 function float_client(c,args)
@@ -140,6 +143,9 @@ function float_client(c,args)
 		return 
 	else
 	end
+end
+function top_client(c)
+     c.ontop = not c.ontop  
 end
 function switch_client(args)
 	if(args=="next" or args=="prev" ) then
@@ -154,7 +160,6 @@ function switch_client(args)
 	end
 
 end
-
 function get_default_tags(args)
         local s=args.screen or 1
         local t=args.tags or {"main","www"}
