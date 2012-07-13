@@ -51,7 +51,7 @@ end
 --@param me - a panel context
 --@param args - a table of arguments
 --args.payload - a table of strings to use as payloada
---args.options.payload_type= 'buttons' / 'strings' / 'layouts'
+--args.options.payload_type= 'widgets' / 'strings' / 
 function panel.set_payload(me,args)
 	if(not args.payload) then return end
 	--Payload of just a list of strings by default
@@ -59,6 +59,12 @@ function panel.set_payload(me,args)
 		me.payload=args.payload
 		me:update()
 		return
+    else
+        if(args.options.payload_type=='widgets') then --Some table of widgets
+		me.payload=args.payload
+		me:update()
+		return
+        end
 	end
 	if(args.options.payload_type=='buttons') then
 		naughty.notify{text='buttons'}	
@@ -81,10 +87,11 @@ function panel.set_actions(me,args)
 end
 
 
-
+--[[[
 ---Updates the displayed widgets list
 --@TODO check the type of payload element, and modify the widget accordingly
---Ath the moment only accepts a table of strings as payload
+--At the moment only accepts a table of strings as payload
+]]
 function panel.update(me)
 	for i=me.current_index,(me.current_index+me.num_rows-1) do
 		local widget_index=i-me.current_index+1

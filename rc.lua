@@ -31,8 +31,11 @@ do
 end
 -- }}}
 beautiful.init("/home/volcan/.config/awesome/theme/theme.lua")
+naughty.notify({text="This is a testing config"})
 local z = require("z")
 local widgets_box=require("widgets_box")
+
+
 --local shifty=require("shifty")
 local zapps = require ("zapps")
 -- {{{ Variable definitions
@@ -68,8 +71,13 @@ config.keys.global=awful.util.table.join(
 	awful.key({ config.modkey,	     }, "Return", function() awful.util.spawn(config.terminal) end),
 	awful.key({ config.modkey,	     },"r",function() config.widgets.promptbox:run() end),
 	awful.key({ config.modkey,	     },"x",function() lua_prompt() end),
+    --Window manipulations
     awful.key({ config.modkey,       },"\\",function() toggle_master() end),
-
+    awful.key({ config.modkey,       },"]",function() awful.tag.incmwfact( 0.05) end),
+    awful.key({ config.modkey,       },"[",function() awful.tag.incmwfact( -0.05) end),
+    --Tag manipulation
+    awful.key({ config.modkey,       },"n",function() add_tag({}) end),
+    awful.key({ config.modkey,       },"d",function() delete_tag({}) end),
 
     --run or raise stuff
     awful.key({ config.modkey,       }, "s", function() tstog(); end), -- toggle tshark
@@ -184,14 +192,49 @@ function get_default_tags(args)
         return awful.tag(t,s,config.layouts[1])
 end
 function add_tag(args)
-    local screen = mouse.screen
-    awful.tag("YOU MUMMA")
-    awful.widget.taglist.taglist_update()
+    local screen = args.screen or mouse.screen or 1
+    local text   = args.name or "Aux"
+    naughty.notify({text='screen: '..screen})
+    --for i,v in ipairs(config.tags[screen]) do
+--    for i,v in ipairs(awful.tag[screen]) do
+--        naughty.notify({text="Tag num:"..i})
+--        
+--    end
+    return awful.tag.add(text,{})
+--    local tags=config.tags[screen]
+--    local tag = awful.tag({"YOU MUMMA"})
+--    tags:taglist_update(screen,tag,awful.widget.taglist.filter.all,config.mouse.tags)
+--    awful.widget.taglist.taglist_update(screen,tag,awful.widget.taglist.filter.all,config.mouse.tags)
+end
+--[[[
+    TODO Not working properly for new tags
+    Search if tag already exist, return tag or new tag
+    @args a table of arguments
+    @args.name The tag we want
+]]--
+function move_to_tag(args)
+    if not args then return end
+    if not args.name then return end
+    --for i,v in ipairs(config.tags[mouse.screen]) do
+    --for i,v in ipairs(awful.tag.selectedlist(mouse.screen)) do
+    for i,v in ipairs(awful.widget.taglist) do
+        naughty.notify({text="Tag#"..i..v.name})
+        if v.name==args.name then 
+            naughty.notify({text='found tag corresponding to'})
+            return v 
+            end
+        end
+    return add_tag({name=args.name})
+end
+function delete_tag(args)
+    --local current_tag=awful.tag.selected(mouse.screen)
+    --current_tag:delete()
+    awful.tag.delete()
 end
 
 
 if (screen.count()==1) then
-	config.tags[1]=get_default_tags({screen=1,tags={"main","www","test1","test2","test3","I","AM","SICK","OF","THIS"}})
+	config.tags[1]=get_default_tags({screen=1,tags={"main","sys"}})
 	config.widgets.tags=awful.widget.taglist(1,awful.widget.taglist.filter.all,config.mouse.tags)
 	config.widgets.tasks=awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags,{})
 	config.topbar_wibox={}
@@ -227,6 +270,9 @@ awful.rules.rules = {
         keys=config.keys.client,
         buttons = config.mouse.client
     }},
+    --{ rule={ class="Icedove"},properties={tag = config.tags[1][2]},callback=function(c) naughty.notify({text='match icedove'})end},
+    { rule={ class="Icedove"}, properties={tag = function() return move_to_tag({name='email'}) end} },
+    { rule={ class="Iceweasel"}, properties={tag = function() return move_to_tag({name='www'}) end} },
     { rule={ name="^Gnuplot"},
       properties={
 --		x=880,
@@ -308,6 +354,14 @@ end)
 --f:close()
 
 --local mbutton = z.button("hi",function() naughty.notify({text="hi"}) end)
+--local mbutton = z.button("hi",function() naughty.notify({text="hi"}) end)
+local somepanel=z.panel({})
+local somewidget=wibox.widget.textbox({})
+local somepayload={
+        somewidget
+}
+--somepanel:set_payload({payload_type=widgets}
+
 
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)

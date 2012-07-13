@@ -51,7 +51,7 @@ function button.new(txt,fn)
     msg("New quick button")
     local ret={}
     local mwdidget=wibox.widget.textbox()
-    mwidget:set_matrup(txt)
+    mwidget:set_markup(txt)
     local mbuttons=awful.util.table.join(awful.button({ }, 1,fn))
     ret.mwidget=mwidget
     ret.mbuttons=mbuttons
