@@ -1,6 +1,8 @@
+require("z.button")
 require("z.panel")
 require("z.utils")
 require("z.network")
 require("z.network.connections")
 require("z.logs.logs_panel")
+require("z.tags")
 module("z")

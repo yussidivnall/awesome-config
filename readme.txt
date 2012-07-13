@@ -44,6 +44,8 @@ mpanel:append("D")
 --You can scroll up or down the panel,either through key bindings, or through implementing your own key grabber using:
 mpanel:scroll("up")
 mpanel:scroll("down")
+mpanel:scroll("first")
+mpanel:scroll("last")
 --You can also pop a panel which by default will show for 5 seconds, or specify a timeout
 mpanel:pop()
 mpanel:pop({timeout=10})
@@ -62,6 +64,8 @@ logs.panel.lua could do with slight improvement to the logging functions
 
 networkz.lua should color and handle to alerts better (no need to popup for localhost>localhost etc (maybe some fine tuning of my tcpspy is in order but i like seing all connections regardsless)
 
+Better multiple screens handling
+
 todo:
 make a video of some of this in action, 
 make a simple webpage on github
@@ -70,3 +74,4 @@ make a netstat -lptu panel
 allow to pin panels so they don't disapear (mostly in networkz.lua)
 make a reference table for consistent keyhandling in networkz
 make the best ever hacker desktop!!!
+

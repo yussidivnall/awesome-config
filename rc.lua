@@ -68,6 +68,10 @@ config.keys.global=awful.util.table.join(
 	awful.key({ config.modkey,	     }, "Return", function() awful.util.spawn(config.terminal) end),
 	awful.key({ config.modkey,	     },"r",function() config.widgets.promptbox:run() end),
 	awful.key({ config.modkey,	     },"x",function() lua_prompt() end),
+    awful.key({ config.modkey,       },"\\",function() toggle_master() end),
+
+
+    --run or raise stuff
     awful.key({ config.modkey,       }, "s", function() tstog(); end), -- toggle tshark
     awful.key({ config.modkey,       }, "k", function() ktog();end), --toggle konsole
     awful.key({ config.modkey,       }, "d", function() tog("dmesg");end), --toggle dmesg
@@ -125,6 +129,20 @@ function lua_prompt()
     awful.util.eval,nil,
     awful.util.getdir("cache").."/history_eval")
 end
+function toggle_master()
+    naughty.notify({text="toggling master"})
+    c=awful.client.next(1)
+    --c:raise()
+    --c:setslave()
+    client.focus = c
+    if awful.layout.get(c.screen) ~= awful.layout.suit.magnifier
+        and awful.client.focus.filter(c) then
+        awful.client.setslave(c)
+    end
+    --awful.client.focus=c
+    --awful.client.focus.byidx(1)
+    if client.focus then client.focus:raise() end
+end
 function maximize_client(c)
     c.maximized_horizontal = not c.maximized_horizontal
     c.maximized_vertical   = not c.maximized_vertical
@@ -165,7 +183,11 @@ function get_default_tags(args)
         local t=args.tags or {"main","www"}
         return awful.tag(t,s,config.layouts[1])
 end
-
+function add_tag(args)
+    local screen = mouse.screen
+    awful.tag("YOU MUMMA")
+    awful.widget.taglist.taglist_update()
+end
 
 
 if (screen.count()==1) then
@@ -201,7 +223,7 @@ awful.rules.rules = {
     properties= { 
         border_width = beautiful.border_width,
         border_color = beautiful.border_normal,
-        focus = true,
+        focus = awful.client.focus.filter,
         keys=config.keys.client,
         buttons = config.mouse.client
     }},
@@ -283,9 +305,9 @@ end)
 --zapps.panel_switcher.handle_paste()
 ---------------------------
 --local f=io.popen("xclip -o")
-
 --f:close()
 
+--local mbutton = z.button("hi",function() naughty.notify({text="hi"}) end)
 
 
 client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)

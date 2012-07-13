@@ -22,6 +22,7 @@ panel={
 --@return a new panel
 function panel.new(args)
 	local ret={}
+    if(args==nil)then args={} end
 	ret.num_rows=args.rows or 15	
 	ret.wb_params = args.wibox_params or {}
 	if not ret.wb_params.height then ret.wb_params.height=ret.num_rows*13 end
@@ -91,7 +92,8 @@ function panel.update(me)
 			--Check type (see todo)
 			if (i==me.selected) then 
 				--me.payload_layout.widgets[widget_index]:set_markup(me.payload[i])
-				
+				--to check payload type here, instead...
+				if(me.payload_type ==nil or me.payload_type=="STRING") then end		
 				me.payload_layout.widgets[widget_index]:set_markup("<span color='red' bgcolor='grey'> "..me.payload[i].."</span>")
 			else
 				me.payload_layout.widgets[widget_index]:set_markup(me.payload[i])
@@ -166,6 +168,7 @@ function panel.visible(me) return me.wibox.visible end
 -- else pop up panel for a given time
 --@param args.timeout the timeout to pop for default 5
 function panel.pop(me,args)
+    local args=args or {}
 	local to=args.timeout or me.default_pop_timeout or 5
 	if(me.wibox.visible==true and me.pop_on==false) then return end -- no need to popup
 	me:show()
