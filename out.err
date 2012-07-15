@@ -1,4 +1,25 @@
 ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
-WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-9wkevu/pkcs11: No such file or directory
+WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-e4ix2k/pkcs11: No such file or directory
 tshark: option requires an argument -- 'r'
-E: awesome: a_xcb_io_cb:251: X server connection broke
+W: awesome: luaA_dofunction:78: error while running function
+stack traceback:
+	[C]: ?
+	./rc.lua:202: in function 'toggle_master'
+	./rc.lua:91: in function 'press'
+	/usr/local/share/awesome/lib/awful/key.lua:42: in function </usr/local/share/awesome/lib/awful/key.lua:42>
+error: ./rc.lua:202: bad argument #3 to '?' (client expected, got nil)
+ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
+WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-e4ix2k/pkcs11: No such file or directory
+tshark: option requires an argument -- 'r'
+ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
+WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-e4ix2k/pkcs11: No such file or directory
+tshark: option requires an argument -- 'r'
+ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
+WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-e4ix2k/pkcs11: No such file or directory
+tshark: option requires an argument -- 'r'
+ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
+WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-e4ix2k/pkcs11: No such file or directory
+tshark: option requires an argument -- 'r'
+ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
+WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-e4ix2k/pkcs11: No such file or directory
+tshark: option requires an argument -- 'r'

@@ -31,7 +31,7 @@ do
     end)
 end
 -- }}}
-beautiful.init("/home/volcan/.config/awesome/theme/theme.lua")
+beautiful.init("/home/volcan/Desktop/development/awesome/testing/theme/theme.lua")
 naughty.notify({text="This is a testing config"})
 local z = require("z")
 --z.tags=require("z.tags")
@@ -57,14 +57,39 @@ config.konsole=nil
 config.konsole_ontop=false
 
 config.modkey="Mod4"
+config.menukey="Menu"
+
 config.layouts={
-	awful.layout.suit.floating,
-	awful.layout.suit.tile,
-	awful.layout.suit.tile.top,
-	awful.layout.suit.max,
+    awful.layout.suit.floating,
+    awful.layout.suit.tile,
+    awful.layout.suit.tile.left,
+    awful.layout.suit.tile.bottom,
+    awful.layout.suit.tile.top,
+    awful.layout.suit.fair,
+    awful.layout.suit.fair.horizontal,
+    awful.layout.suit.spiral,
+    awful.layout.suit.spiral.dwindle,
+    awful.layout.suit.max,
+    awful.layout.suit.max.fullscreen,
+    awful.layout.suit.magnifier
 }
+
+config.geometry={}
+config.geometry.drawable={x=0,y=15,width=800,height=600}
+--Corner geometry
+config.geometry.top_left_corner={x=config.geometry.drawable.x,y=20,width=300,height=300}
+config.geometry.top_right_corner={x=config.geometry.drawable.width-300,y=20,width=300,height=300}
+--Pane Geometry
+config.geometry.left_pane={x=0,y=20,width=200,height=config.geometry.drawable.height}
+config.geometry.right_pane={x=config.geometry.drawable.width-200,y=20,width=200,height=config.geometry.drawable.height}
+config.geometry.top_pane={x=0,y=20,width=config.geometry.drawable.width,height=200}
+config.geometry.bottom_pane={x=0,y=config.geometry.drawable.height-200,width=config.geometry.drawable.width,height=200}
+
 config.keys={}
 config.keys.global=awful.util.table.join(
+    
+    awful.key({ config.modkey,       }, "z",function() naughty.notify({text='menu key'})end),
+
 	awful.key({ config.modkey,       }, "Up",   awful.tag.viewnext	  ),
 	awful.key({ config.modkey,       }, "Down",   awful.tag.viewprev      ),
 	awful.key({ config.modkey,       }, "Left",  function() switch_client("next") end ),
@@ -90,17 +115,32 @@ config.keys.global=awful.util.table.join(
 	--clipboard stuff
 	awful.key({ config.modkey,     	     },"v", function() zapps.clips.next_select() end),
 	awful.key({ config.modkey,           },"c", function() zapps.clips.clip() end),
-    awful.key({ config.modkey,           }, "a",function() widgets_box.toggle() end),
+--    awful.key({ config.modkey,           }, "a",function() widgets_box.toggle() end),
     awful.key({ config.modkey,"Control"  }, "r",awesome.restart),
     awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit)
 )
+--[[Client keys ]]--
 config.keys.client=awful.util.table.join(
 	awful.key({ config.modkey,	     },"q", function(c) c:kill() end),
 	awful.key({ config.modkey,	     },"m", function(c) maximize_client(c) end),
-	awful.key({ config.modkey,	     },"w", function(c) fullscreen_client(c) end),
+--	awful.key({ config.modkey,	     },"w", function(c) fullscreen_client(c) end),
 	awful.key({ config.modkey,	     },"f", function(c) float_client(c,{}) end),
-	awful.key({ config.modkey,	     },"t", function(c) top_client(c) end)
---	awful.key({ config.modkey,"Alt"  },"e", function(c) position_client(c,{}) end)
+	awful.key({ config.modkey,	     },"t", function(c) top_client(c) end),
+    
+    --Client position settings TODO Add Shift for prod
+    --GAME LIKE, PANE 
+	awful.key({ config.menukey,	     },"w", function(c) c:geometry(config.geometry.top_pane ) end), 
+	awful.key({ config.menukey,	     },"x", function(c) c:geometry(config.geometry.bottom_pane) end), 
+	awful.key({ config.menukey,	     },"a", function(c) c:geometry(config.geometry.left_pane) end),
+	awful.key({ config.menukey,	     },"d", function(c) c:geometry(config.geometry.right_pane) end), 
+    --GAME LIKE, CORNERS
+	awful.key({ config.menukey,	     },"e", function(c) c:geometry(config.geometry.top_right_corner) end), 
+	awful.key({ config.menukey,	     },"q", function(c) c:geometry(config.geometry.top_left_corner) end), 
+    --Client resizing
+    awful.key({ config.modkey,},"]", function(c) 
+        c:move_or_resize(0,0,10,10)  
+        naughty.notify({text="bigger"})
+        end)    
     )
 
 config.mouse={}
@@ -157,6 +197,8 @@ function toggle_master()
     --awful.client.focus.byidx(1)
     if client.focus then client.focus:raise() end
 end
+function position_client(c,args)
+end
 function maximize_client(c)
     c.maximized_horizontal = not c.maximized_horizontal
     c.maximized_vertical   = not c.maximized_vertical
@@ -168,18 +210,6 @@ function fullscreen_client(c)
 --    c.ontop=true
 --    c.focus=true
 end
-function position_client(c,args)
-    if not args then return end
-    local pos=args.pos
-    if pos then 
-        if pos=="top_left" then
-            elseif pos=="top_right" then
-            elseif pos=="bottom_left" then
-            elseif pos=="bottom_right" then
-            end
-    end
-end
-
 
 function float_client(c,args)
 	awful.client.floating.toggle(c)
@@ -213,16 +243,7 @@ function add_tag(args)
     local screen = args.screen or mouse.screen or 1
     local text   = args.name or "Aux"
     naughty.notify({text='screen: '..screen})
-    --for i,v in ipairs(config.tags[screen]) do
---    for i,v in ipairs(awful.tag[screen]) do
---        naughty.notify({text="Tag num:"..i})
---        
---    end
     return awful.tag.add(text,{})
---    local tags=config.tags[screen]
---    local tag = awful.tag({"YOU MUMMA"})
---    tags:taglist_update(screen,tag,awful.widget.taglist.filter.all,config.mouse.tags)
---    awful.widget.taglist.taglist_update(screen,tag,awful.widget.taglist.filter.all,config.mouse.tags)
 end
 --[[[
     TODO Not working properly for new tags
