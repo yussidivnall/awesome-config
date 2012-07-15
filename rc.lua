@@ -34,7 +34,7 @@ end
 beautiful.init("/home/volcan/.config/awesome/theme/theme.lua")
 naughty.notify({text="This is a testing config"})
 local z = require("z")
-z.tags=require("z.tags")
+--z.tags=require("z.tags")
 local widgets_box=require("widgets_box")
 --local z.tags=require("z.tags")
 
@@ -92,22 +92,7 @@ config.keys.global=awful.util.table.join(
 	awful.key({ config.modkey,           },"c", function() zapps.clips.clip() end),
     awful.key({ config.modkey,           }, "a",function() widgets_box.toggle() end),
     awful.key({ config.modkey,"Control"  }, "r",awesome.restart),
-    awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit),
-    --Debuging shortcuts
-    awful.key({ config.modkey,  }, "F12",function() --dump z.tags
-                                                local tt={
-                                                     a="Hi",
-                                                     b=nil,
-                                                     c={'a','b','c',{s="hi",{b=bye,2}}
-                                                     }
-
-                                                    }
-                                                local txt=z.utils.decend(tt)
-                                                --local txt=z.utils.decend(z.panel)
-                                                naughty.notify({text=txt})
-                                                --naughty.notify({text=z.utils.decend(tt)})
-                                            end)
-
+    awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit)
 )
 config.keys.client=awful.util.table.join(
 	awful.key({ config.modkey,	     },"q", function(c) c:kill() end),
@@ -192,6 +177,7 @@ function position_client(c,args)
             elseif pos=="bottom_left" then
             elseif pos=="bottom_right" then
             end
+    end
 end
 
 

@@ -1,0 +1,4 @@
+ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
+WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-9wkevu/pkcs11: No such file or directory
+tshark: option requires an argument -- 'r'
+E: awesome: a_xcb_io_cb:251: X server connection broke
