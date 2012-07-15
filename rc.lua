@@ -5,6 +5,7 @@ require("awful.autofocus")
 local wibox = require("wibox")
 local naughty = require("naughty")
 local menubar = require("menubar")
+--local tagz=require("z.tags")
 --require("eminent")
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -33,8 +34,9 @@ end
 beautiful.init("/home/volcan/.config/awesome/theme/theme.lua")
 naughty.notify({text="This is a testing config"})
 local z = require("z")
+z.tags=require("z.tags")
 local widgets_box=require("widgets_box")
-
+--local z.tags=require("z.tags")
 
 --local shifty=require("shifty")
 local zapps = require ("zapps")
@@ -43,6 +45,7 @@ local zapps = require ("zapps")
 --local wibox=z.wibox()
 --local widget=z.wibox.widget
 local config={}
+
 if (screen.count() ==1) then
 	config.screen=1
 else
@@ -75,6 +78,7 @@ config.keys.global=awful.util.table.join(
     awful.key({ config.modkey,       },"\\",function() toggle_master() end),
     awful.key({ config.modkey,       },"]",function() awful.tag.incmwfact( 0.05) end),
     awful.key({ config.modkey,       },"[",function() awful.tag.incmwfact( -0.05) end),
+    
     --Tag manipulation
     awful.key({ config.modkey,       },"n",function() add_tag({}) end),
     awful.key({ config.modkey,       },"d",function() delete_tag({}) end),
@@ -88,7 +92,22 @@ config.keys.global=awful.util.table.join(
 	awful.key({ config.modkey,           },"c", function() zapps.clips.clip() end),
     awful.key({ config.modkey,           }, "a",function() widgets_box.toggle() end),
     awful.key({ config.modkey,"Control"  }, "r",awesome.restart),
-    awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit)
+    awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit),
+    --Debuging shortcuts
+    awful.key({ config.modkey,  }, "F12",function() --dump z.tags
+                                                local tt={
+                                                     a="Hi",
+                                                     b=nil,
+                                                     c={'a','b','c',{s="hi",{b=bye,2}}
+                                                     }
+
+                                                    }
+                                                local txt=z.utils.decend(tt)
+                                                --local txt=z.utils.decend(z.panel)
+                                                naughty.notify({text=txt})
+                                                --naughty.notify({text=z.utils.decend(tt)})
+                                            end)
+
 )
 config.keys.client=awful.util.table.join(
 	awful.key({ config.modkey,	     },"q", function(c) c:kill() end),
@@ -96,7 +115,8 @@ config.keys.client=awful.util.table.join(
 	awful.key({ config.modkey,	     },"w", function(c) fullscreen_client(c) end),
 	awful.key({ config.modkey,	     },"f", function(c) float_client(c,{}) end),
 	awful.key({ config.modkey,	     },"t", function(c) top_client(c) end)
-)
+--	awful.key({ config.modkey,"Alt"  },"e", function(c) position_client(c,{}) end)
+    )
 
 config.mouse={}
 config.mouse.client=awful.util.table.join(
@@ -115,6 +135,7 @@ config.widgets.text_clock=awful.widget.textclock()
 
 config.widgets.systray=wibox.widget.systray()
 config.widgets.promptbox=awful.widget.prompt()
+config.widgets.layoutbox={}
 config.widgets.tags={}
 config.widgets.tasks={}
 config.widgets.networkalertmenu={
@@ -162,6 +183,17 @@ function fullscreen_client(c)
 --    c.ontop=true
 --    c.focus=true
 end
+function position_client(c,args)
+    if not args then return end
+    local pos=args.pos
+    if pos then 
+        if pos=="top_left" then
+            elseif pos=="top_right" then
+            elseif pos=="bottom_left" then
+            elseif pos=="bottom_right" then
+            end
+end
+
 
 function float_client(c,args)
 	awful.client.floating.toggle(c)
@@ -215,9 +247,11 @@ end
 function move_to_tag(args)
     if not args then return end
     if not args.name then return end
+    print(type(mouse.screen))
+
     --for i,v in ipairs(config.tags[mouse.screen]) do
     --for i,v in ipairs(awful.tag.selectedlist(mouse.screen)) do
-    for i,v in ipairs(awful.widget.taglist) do
+    for i,v in pairs(awful.widget.taglist) do
         naughty.notify({text="Tag#"..i..v.name})
         if v.name==args.name then 
             naughty.notify({text='found tag corresponding to'})
@@ -238,9 +272,11 @@ if (screen.count()==1) then
 	config.widgets.tags=awful.widget.taglist(1,awful.widget.taglist.filter.all,config.mouse.tags)
 	config.widgets.tasks=awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags,{})
 	config.topbar_wibox={}
+    config.widgets.layoutbox=awful.widget.layoutbox(s)
 	config.topbar_wibox[1]=awful.wibox({position="top",screen=1})
 
 	local left_widgets=wibox.layout.fixed.horizontal()
+    left_widgets:add(config.widgets.layoutbox)
 	left_widgets:add(config.widgets.tags)
 	left_widgets:add(config.widgets.promptbox)
 	left_widgets:add(config.widgets.tasks)
@@ -269,10 +305,18 @@ awful.rules.rules = {
         focus = awful.client.focus.filter,
         keys=config.keys.client,
         buttons = config.mouse.client
-    }},
+    },
+    callback=function(c)
+        c.size_hints_honor = false
+    end
+    },
     --{ rule={ class="Icedove"},properties={tag = config.tags[1][2]},callback=function(c) naughty.notify({text='match icedove'})end},
     { rule={ class="Icedove"}, properties={tag = function() return move_to_tag({name='email'}) end} },
     { rule={ class="Iceweasel"}, properties={tag = function() return move_to_tag({name='www'}) end} },
+    { rule={ class="Xephyr"}, properties={tag = function() return move_to_tag({name='awesome_test'}) end} },
+    { rule={ class="Wireshark"}, properties={tag = function() return move_to_tag({name='wireshark'}) end} },
+    { rule={ class="Eclipse"}, properties={tag = function() return move_to_tag({name='eclipse'}) end} },
+
     { rule={ name="^Gnuplot"},
       properties={
 --		x=880,
@@ -336,31 +380,8 @@ client.connect_signal("manage", function (c, startup)
 end)
 
 
---Tests randmoness follows:
----------------------------
---os.execute("xclip -o > /tmp/clip")
---local f=io.open("/tmp/clip")
---if(f) then
---	naughty.notify("File opened!")
---
---	io.close(f)
---end
---local txt=f:read("*l")
---zapps.panel_switcher.clip("hlkjhjk")
---zapps.panel_switcher.show_buffer()
---zapps.panel_switcher.handle_paste()
----------------------------
---local f=io.popen("xclip -o")
---f:close()
 
---local mbutton = z.button("hi",function() naughty.notify({text="hi"}) end)
---local mbutton = z.button("hi",function() naughty.notify({text="hi"}) end)
-local somepanel=z.panel({})
-local somewidget=wibox.widget.textbox({})
-local somepayload={
-        somewidget
-}
---somepanel:set_payload({payload_type=widgets}
+
 
 
 
@@ -429,3 +450,4 @@ end
 function msg(s)
 	naughty.notify({text=s,timeout=15})
 end
+

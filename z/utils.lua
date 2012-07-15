@@ -1,10 +1,12 @@
 local io=io
+local os=os
 local awful=require("awful")
 local naughty=require("naughty")
 local wibox=require("wibox")
 local string=string
 local type=type
 local ipairs=ipairs
+local pairs=pairs
 local table=table
 module("z.utils")
 
@@ -101,4 +103,61 @@ end
 function dbg(s)
         naughty.notify({text=s,timeout=15})
 end
+
+
+
+local level=0
+local transvesal=""
+function spaces(n)
+    local ret=""
+    if(n==0)then return ret end
+    for i=0,n,1 do
+        ret=ret.."\t" 
+    end
+    return ret
+end
+
+
+function decend(tbl)
+    local ret=""
+    --if(type(tbl)~=table) then return type(tbl) end
+    level=0
+    ret=trasverse(tbl)
+    return ret;
+end
+
+function trasverse(tbl)
+    naughty.notify({text='tas lever'..level})
+    local max=50
+    local ret=""
+    --local ret=transvesal
+    for i,v in pairs(tbl) do
+        --os.execute("sleep 1")
+        --naughty.notify({text="i"..i.." t"..type(v)})
+        if type(v)=='table' then 
+            --naughty.notify({text='tbl'})
+            --print('tbl')
+            ret=ret..spaces(level).."table\n"
+            if(max >= level) then ret=ret..trasverse(v) end
+            level=level+1
+        elseif(type(v)=='function') then
+            --naughty.notify({text='fn'})
+            --print('fn')
+            ret=ret..spaces(level).."function\n" 
+        elseif(type(v)=='string') then
+            --naughty.notify({text='s'})
+            ret=ret..spaces(level)..'string='..v.."\n" 
+        elseif(type(v)=='number') then ret=ret..spaces(level)..'number='..v.."\n"
+        elseif(type(v)=='nil') then 
+            ret=ret..spaces(level)..'nil\n'
+            --naughty.notify({text='nil'})
+        else
+            ret=ret..level.."I AM NOT CHECKED:"..type(v).."\n"
+        end
+        --level=level-1
+    end
+    --naugty.notify({text=ret})
+    return ret
+end
+
 

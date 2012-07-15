@@ -1,6 +1,7 @@
 require("z.utils")
 require("z.button")
 require("z.panel")
+require("z.lpanel")
 require("z.menu")
 require("z.network")
 require("z.network.connections")
