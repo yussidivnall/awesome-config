@@ -16,6 +16,10 @@ local naughty=require("naughty")
 module("z.lpanel")
 lpanel={}
 
+function printsomthing(args)
+    print("Hi")
+    end
+
 function lpanel.new(args)
     local ret={}
     if(args==nil)then args={} end

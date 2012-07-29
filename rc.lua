@@ -1,3 +1,7 @@
+--[[[
+    I Am never sure which of these i need as local a=require("a) and which just require("a")
+    This is just my rc.
+]]--
 local beautiful = require("beautiful")
 local awful = require("awful")
 awful.rules = require("awful.rules")
@@ -33,32 +37,43 @@ end
 -- }}}
 beautiful.init("/home/volcan/Desktop/development/awesome/testing/theme/theme.lua")
 naughty.notify({text="This is a testing config"})
+
+--Sometimes it helps if you require something after beautiful init, Naughty does that
 local z = require("z")
 --z.tags=require("z.tags")
 local widgets_box=require("widgets_box")
 --local z.tags=require("z.tags")
-
+local tags=require("z.tags")
 --local shifty=require("shifty")
 local zapps = require ("zapps")
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
 --local wibox=z.wibox()
 --local widget=z.wibox.widget
-local config={}
 
-if (screen.count() ==1) then
-	config.screen=1
-else
-	config.screen=2
-end
+--General configurations
+local config={}
+--Screens settings
+local screens={}
+--Widgets which are shared on all screens
+local shared={}
+shared.systray=wibox.widget.systray()
+shared.promptbox=awful.widget.prompt()
+
+local keys={}
+keys.global={}
+keys.client={}
+
+local buttons={}
+buttons.client={}
+buttons.taglist={}
+buttons.tasklist={}
+
 config.terminal="rxvt-unicode"
-config.consoles={}
 config.konsole=nil
 config.konsole_ontop=false
-
 config.modkey="Mod4"
-config.menukey="Menu"
-
+config.menukey="Mod3"
 config.layouts={
     awful.layout.suit.floating,
     awful.layout.suit.tile,
@@ -85,11 +100,9 @@ config.geometry.right_pane={x=config.geometry.drawable.width-200,y=20,width=200,
 config.geometry.top_pane={x=0,y=20,width=config.geometry.drawable.width,height=200}
 config.geometry.bottom_pane={x=0,y=config.geometry.drawable.height-200,width=config.geometry.drawable.width,height=200}
 
-config.keys={}
-config.keys.global=awful.util.table.join(
-    
-    awful.key({ config.modkey,       }, "z",function() naughty.notify({text='menu key'})end),
 
+keys.global=awful.util.table.join(
+    awful.key({ config.modkey,       }, "z",function() naughty.notify({text='menu key'})end),
 	awful.key({ config.modkey,       }, "Up",   awful.tag.viewnext	  ),
 	awful.key({ config.modkey,       }, "Down",   awful.tag.viewprev      ),
 	awful.key({ config.modkey,       }, "Left",  function() switch_client("next") end ),
@@ -97,13 +110,12 @@ config.keys.global=awful.util.table.join(
     awful.key({ config.modkey,       },"z",function() z.network.connections.toggle() end ),
 	awful.key({ config.modkey,       }, "space",function() awful.layout.inc(config.layouts,1) end),
 	awful.key({ config.modkey,	     }, "Return", function() awful.util.spawn(config.terminal) end),
-	awful.key({ config.modkey,	     },"r",function() config.widgets.promptbox:run() end),
+	awful.key({ config.modkey,	     },"r",function() shared.promptbox:run() end),
 	awful.key({ config.modkey,	     },"x",function() lua_prompt() end),
     --Window manipulations
     awful.key({ config.modkey,       },"\\",function() toggle_master() end),
     awful.key({ config.modkey,       },"]",function() awful.tag.incmwfact( 0.05) end),
     awful.key({ config.modkey,       },"[",function() awful.tag.incmwfact( -0.05) end),
-    
     --Tag manipulation
     awful.key({ config.modkey,       },"n",function() add_tag({}) end),
     awful.key({ config.modkey,       },"d",function() delete_tag({}) end),
@@ -120,36 +132,37 @@ config.keys.global=awful.util.table.join(
     awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit)
 )
 --[[Client keys ]]--
-config.keys.client=awful.util.table.join(
+keys.client=awful.util.table.join(
 	awful.key({ config.modkey,	     },"q", function(c) c:kill() end),
 	awful.key({ config.modkey,	     },"m", function(c) maximize_client(c) end),
---	awful.key({ config.modkey,	     },"w", function(c) fullscreen_client(c) end),
+	awful.key({ config.modkey,	     },"w", function(c) fullscreen_client(c) end),
 	awful.key({ config.modkey,	     },"f", function(c) float_client(c,{}) end),
 	awful.key({ config.modkey,	     },"t", function(c) top_client(c) end),
-    
-    --Client position settings TODO Add Shift for prod
+    awful.key({ config.modkey,       },"o", awful.client.movetoscreen),    
+    --Client position settings , Menukey
     --GAME LIKE, PANE 
-	awful.key({ config.menukey,	     },"w", function(c) c:geometry(config.geometry.top_pane ) end), 
-	awful.key({ config.menukey,	     },"x", function(c) c:geometry(config.geometry.bottom_pane) end), 
-	awful.key({ config.menukey,	     },"a", function(c) c:geometry(config.geometry.left_pane) end),
-	awful.key({ config.menukey,	     },"d", function(c) c:geometry(config.geometry.right_pane) end), 
+    awful.key({ config.menukey,},"w", function(c) c:geometry(config.geometry.top_pane ) end), 
+    awful.key({ config.menukey,},"x", function(c) c:geometry(config.geometry.bottom_pane) end), 
+    awful.key({ config.menukey,},"a", function(c) c:geometry(config.geometry.left_pane) end),
+    awful.key({ config.menukey,},"d", function(c) c:geometry(config.geometry.right_pane) end), 
     --GAME LIKE, CORNERS
-	awful.key({ config.menukey,	     },"e", function(c) c:geometry(config.geometry.top_right_corner) end), 
-	awful.key({ config.menukey,	     },"q", function(c) c:geometry(config.geometry.top_left_corner) end), 
-    --Client resizing
-    awful.key({ config.modkey,},"]", function(c) 
-        c:move_or_resize(0,0,10,10)  
-        naughty.notify({text="bigger"})
-        end)    
-    )
+    awful.key({ config.menukey,},"e", function(c) c:geometry(config.geometry.top_right_corner) end), 
+    awful.key({ config.menukey,},"q", function(c) c:geometry(config.geometry.top_left_corner) end), 
+    --@TODO Add bottom corners
+    --cLIent resizing
+    awful.key({ config.modkey,      },"=", function(c)resize_client(c,0.2) end),
+    awful.key({ config.modkey,      },"-", function(c)resize_client(c,-0.2) end),
+    --Client to tags
+    awful.key({ config.menukey,      },"<", function(c) c:geometry(config.geometry.top_right_corner) end), 
+    awful.key({ config.menukey,      },">", function(c) c:geometry(config.geometry.top_left_corner) end)
+)
 
-config.mouse={}
-config.mouse.client=awful.util.table.join(
+buttons.client=awful.util.table.join(
 	awful.button({ config.modkey },3,awful.mouse.client.resize),
 	awful.button({ config.modkey },1,awful.mouse.client.move),
 	awful.button({},1,function(c) client.focus=c; c:raise() end)
 )
-config.mouse.tags=awful.util.table.join(
+buttons.taglist=awful.util.table.join(
 	awful.button({ config.modkey },3,awful.client.movetotag)
 )
 
@@ -158,11 +171,6 @@ config.tags={}
 config.widgets={}
 config.widgets.text_clock=awful.widget.textclock()
 
-config.widgets.systray=wibox.widget.systray()
-config.widgets.promptbox=awful.widget.prompt()
-config.widgets.layoutbox={}
-config.widgets.tags={}
-config.widgets.tasks={}
 config.widgets.networkalertmenu={
 	{"toggle background capture", "xterm"}
 }
@@ -179,7 +187,7 @@ config.multiple_screens="duplicate"
 
 function lua_prompt()
     awful.prompt.run({prompt="lua >"},
-    config.widgets.promptbox.widget,
+    shared.promptbox.widget,
     awful.util.eval,nil,
     awful.util.getdir("cache").."/history_eval")
 end
@@ -199,6 +207,20 @@ function toggle_master()
 end
 function position_client(c,args)
 end
+function resize_client(c,fact)
+    if(not c) then return end
+
+    local factor=fact
+    local geom=c:geometry()
+--    if(c.floating==true) then
+       geom["width"]=geom["width"] + geom["width"]*factor
+       geom["height"]=geom["height"] + geom["height"]*factor
+       c:geometry(geom)
+--    else
+
+--    end
+end
+
 function maximize_client(c)
     c.maximized_horizontal = not c.maximized_horizontal
     c.maximized_vertical   = not c.maximized_vertical
@@ -254,11 +276,7 @@ end
 function move_to_tag(args)
     if not args then return end
     if not args.name then return end
-    print(type(mouse.screen))
-
-    --for i,v in ipairs(config.tags[mouse.screen]) do
-    --for i,v in ipairs(awful.tag.selectedlist(mouse.screen)) do
-    for i,v in pairs(awful.widget.taglist) do
+    for i,v in ipairs(screens[mouse.screen].tags) do
         naughty.notify({text="Tag#"..i..v.name})
         if v.name==args.name then 
             naughty.notify({text='found tag corresponding to'})
@@ -274,55 +292,58 @@ function delete_tag(args)
 end
 
 
-if (screen.count()==1) then
-	config.tags[1]=get_default_tags({screen=1,tags={"main","sys"}})
-	config.widgets.tags=awful.widget.taglist(1,awful.widget.taglist.filter.all,config.mouse.tags)
-	config.widgets.tasks=awful.widget.tasklist(1, awful.widget.tasklist.filter.currenttags,{})
-	config.topbar_wibox={}
-    config.widgets.layoutbox=awful.widget.layoutbox(s)
-	config.topbar_wibox[1]=awful.wibox({position="top",screen=1})
+function allocate_screens(args)
+    if(config.multiple_screens=="duplicate") then
+        --Only create these once:
+        for s=1,screen.count() do
+            screens[s]={}
+            screens[s].tags=get_default_tags({screen=s,tags={"main","sys"}})
+            screens[s].widgets={} 
+            screens[s].widgets.taglist=awful.widget.taglist(s,awful.widget.taglist.filter.all,buttons.taglist)
+            screens[s].widgets.tasklist=awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags,{})
+            screens[s].widgets.layoutbox=awful.widget.layoutbox(s)
+            screens[s].wiboxes={}
+            screens[s].wiboxes[1]=awful.wibox({position="top",screen=s})
 
-	local left_widgets=wibox.layout.fixed.horizontal()
-    left_widgets:add(config.widgets.layoutbox)
-	left_widgets:add(config.widgets.tags)
-	left_widgets:add(config.widgets.promptbox)
-	left_widgets:add(config.widgets.tasks)
-	local right_widgets=wibox.layout.fixed.horizontal()
-	right_widgets:add(config.widgets.text_clock)
-	right_widgets:add(config.widgets.systray)
-	right_widgets:add(z.logs.panel.widget)
-	local horizontal_widgets=wibox.layout.align.horizontal()
-	horizontal_widgets:set_left(left_widgets)
-	horizontal_widgets:set_right(right_widgets)
-	config.topbar_wibox[1]:set_widget(horizontal_widgets)
-else
-	if (config.multiple_screens=="duplicate") then
-		--@TODO all screens same
-	else
-		--@TODO different contents to each screen
-	end
+            local left_widgets=wibox.layout.fixed.horizontal()
+            left_widgets:add(screens[s].widgets.layoutbox)
+            left_widgets:add(screens[s].widgets.taglist)
+            left_widgets:add(shared.promptbox)
+            left_widgets:add(screens[s].widgets.tasklist)
+            local right_widgets=wibox.layout.fixed.horizontal()
+            right_widgets:add(awful.widget.textclock())
+            right_widgets:add(shared.systray)
+            right_widgets:add(z.logs.panel.widget)
+            local horizontal_widgets=wibox.layout.align.horizontal()
+            horizontal_widgets:set_left(left_widgets)
+            horizontal_widgets:set_right(right_widgets)
+            screens[s].wiboxes[1]:set_widget(horizontal_widgets)
+        end
+    else
+    end
 end
+allocate_screens(args)
 
-root.keys(config.keys.global)
+
+root.keys(keys.global)
 awful.rules.rules = {
     { rule = { },
     properties= { 
         border_width = beautiful.border_width,
         border_color = beautiful.border_normal,
         focus = awful.client.focus.filter,
-        keys=config.keys.client,
-        buttons = config.mouse.client
+        keys=keys.client,
+        buttons = buttons.client
     },
     callback=function(c)
         c.size_hints_honor = false
     end
     },
     --{ rule={ class="Icedove"},properties={tag = config.tags[1][2]},callback=function(c) naughty.notify({text='match icedove'})end},
-    { rule={ class="Icedove"}, properties={tag = function() return move_to_tag({name='email'}) end} },
-    { rule={ class="Iceweasel"}, properties={tag = function() return move_to_tag({name='www'}) end} },
-    { rule={ class="Xephyr"}, properties={tag = function() return move_to_tag({name='awesome_test'}) end} },
-    { rule={ class="Wireshark"}, properties={tag = function() return move_to_tag({name='wireshark'}) end} },
-    { rule={ class="Eclipse"}, properties={tag = function() return move_to_tag({name='eclipse'}) end} },
+    { rule={ class="Icedove",instance="Mail"}, properties={tag = function() return move_to_tag({name='email'}) end} },
+    { rule={ class="Iceweasel",instance="Navigator"}, properties={tag = function() return move_to_tag({name='www'}) end} },
+    { rule={ class="emulator-arm",instance="emulator-arm"}, properties={tag = function() return move_to_tag({name='and-emu'}) end} },
+--    { rule={ class="Xephyr"}, properties={tag = function() return move_to_tag({name='awesome_test'}) end} },
 
     { rule={ name="^Gnuplot"},
       properties={
@@ -357,7 +378,8 @@ awful.rules.rules = {
 	{ rule ={ name="shark"},
 	properties={
 		floating=true,
-		ontop=true
+		ontop=true,
+        opacity=0.5
 	},
 	callback=function(c) 
 		c:geometry({x=0,y=400,width=1280,height=400} )
@@ -387,13 +409,14 @@ client.connect_signal("manage", function (c, startup)
 end)
 
 
-
-
-
-
-
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c) 
+    c.border_color = beautiful.border_focus 
+--    c.opacity=1.0
+end)
+client.connect_signal("unfocus", function(c) 
+    c.border_color = beautiful.border_normal 
+--    c.opacity=0.75
+end)
 
 kons_ontop=false
 kons=""
@@ -457,4 +480,7 @@ end
 function msg(s)
 	naughty.notify({text=s,timeout=15})
 end
-
+--Testing
+--require("z.lpanel")
+--mlpanel=z.lpanel({})
+--mlpanel:show()

@@ -1,25 +1,296 @@
 ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
-WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-e4ix2k/pkcs11: No such file or directory
-tshark: option requires an argument -- 'r'
-W: awesome: luaA_dofunction:78: error while running function
-stack traceback:
-	[C]: ?
-	./rc.lua:202: in function 'toggle_master'
-	./rc.lua:91: in function 'press'
-	/usr/local/share/awesome/lib/awful/key.lua:42: in function </usr/local/share/awesome/lib/awful/key.lua:42>
-error: ./rc.lua:202: bad argument #3 to '?' (client expected, got nil)
-ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
-WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-e4ix2k/pkcs11: No such file or directory
+WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-p1s61l/pkcs11: No such file or directory
 tshark: option requires an argument -- 'r'
 ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
-WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-e4ix2k/pkcs11: No such file or directory
+WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-p1s61l/pkcs11: No such file or directory
 tshark: option requires an argument -- 'r'
 ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
-WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-e4ix2k/pkcs11: No such file or directory
+WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-p1s61l/pkcs11: No such file or directory
 tshark: option requires an argument -- 'r'
-ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
-WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-e4ix2k/pkcs11: No such file or directory
-tshark: option requires an argument -- 'r'
-ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
-WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-e4ix2k/pkcs11: No such file or directory
-tshark: option requires an argument -- 'r'
+W: awesome: systray_cleanup:121: error getting systray atom
+W: awesome: systray_cleanup:121: error getting systray atom
+*** glibc detected *** awesome: corrupted double-linked list: 0x09451f28 ***
+======= Backtrace: =========
+/lib/i386-linux-gnu/i686/cmov/libc.so.6(+0x6e3f1)[0xb714f3f1]
+/lib/i386-linux-gnu/i686/cmov/libc.so.6(+0x6e84a)[0xb714f84a]
+/lib/i386-linux-gnu/i686/cmov/libc.so.6(+0x6fbd5)[0xb7150bd5]
+/lib/i386-linux-gnu/i686/cmov/libc.so.6(cfree+0x6d)[0xb7153d0d]
+/lib/i386-linux-gnu/libglib-2.0.so.0(+0x63f7d)[0xb764bf7d]
+======= Memory map: ========
+08048000-08095000 r-xp 00000000 08:0a 557150     /usr/local/bin/awesome
+08095000-08096000 rw-p 0004d000 08:0a 557150     /usr/local/bin/awesome
+0943f000-09923000 rw-p 00000000 00:00 0          [heap]
+b6500000-b6521000 rw-p 00000000 00:00 0 
+b6521000-b6600000 ---p 00000000 00:00 0 
+b6643000-b66f0000 rw-p 00000000 00:00 0 
+b66f0000-b6747000 rw-p 00000000 00:00 0 
+b6813000-b6821000 r-xp 00000000 08:0a 1228514    /usr/lib/libid3tag.so.0.3.0
+b6821000-b6823000 rw-p 0000d000 08:0a 1228514    /usr/lib/libid3tag.so.0.3.0
+b682c000-b6848000 r-xp 00000000 08:01 333986     /lib/i386-linux-gnu/libgcc_s.so.1
+b6848000-b6849000 rw-p 0001b000 08:01 333986     /lib/i386-linux-gnu/libgcc_s.so.1
+b6849000-b684a000 r-xp 00000000 08:0a 1332829    /usr/lib/imlib2/loaders/argb.so
+b684a000-b684b000 r--p 00001000 08:0a 1332829    /usr/lib/imlib2/loaders/argb.so
+b684b000-b684c000 rw-p 00002000 08:0a 1332829    /usr/lib/imlib2/loaders/argb.so
+b684c000-b684f000 r-xp 00000000 08:0a 1332831    /usr/lib/imlib2/loaders/bmp.so
+b684f000-b6850000 r--p 00002000 08:0a 1332831    /usr/lib/imlib2/loaders/bmp.so
+b6850000-b6851000 rw-p 00003000 08:0a 1332831    /usr/lib/imlib2/loaders/bmp.so
+b6851000-b6889000 r-xp 00000000 08:0a 77450      /usr/lib/i386-linux-gnu/libjpeg.so.8.4.0
+b6889000-b688a000 rw-p 00037000 08:0a 77450      /usr/lib/i386-linux-gnu/libjpeg.so.8.4.0
+b688a000-b6895000 r-xp 00000000 08:0a 74133      /usr/lib/i386-linux-gnu/libjbig.so.0.0.0
+b6895000-b6898000 rw-p 0000b000 08:0a 74133      /usr/lib/i386-linux-gnu/libjbig.so.0.0.0
+b6898000-b68fa000 r-xp 00000000 08:0a 557906     /usr/lib/i386-linux-gnu/libtiff.so.4.3.6
+b68fa000-b68fb000 ---p 00062000 08:0a 557906     /usr/lib/i386-linux-gnu/libtiff.so.4.3.6
+b68fb000-b68fd000 r--p 00062000 08:0a 557906     /usr/lib/i386-linux-gnu/libtiff.so.4.3.6
+b68fd000-b68fe000 rw-p 00064000 08:0a 557906     /usr/lib/i386-linux-gnu/libtiff.so.4.3.6
+b68ff000-b690e000 r-xp 00000000 08:01 335926     /lib/i386-linux-gnu/libbz2.so.1.0.4
+b690e000-b690f000 rw-p 0000f000 08:01 335926     /lib/i386-linux-gnu/libbz2.so.1.0.4
+b690f000-b6910000 r-xp 00000000 08:0a 1332822    /usr/lib/imlib2/loaders/bz2.so
+b6910000-b6911000 r--p 00000000 08:0a 1332822    /usr/lib/imlib2/loaders/bz2.so
+b6911000-b6912000 rw-p 00001000 08:0a 1332822    /usr/lib/imlib2/loaders/bz2.so
+b6912000-b691a000 r-xp 00000000 08:0a 1227444    /usr/lib/libgif.so.4.1.6
+b691a000-b691b000 rw-p 00007000 08:0a 1227444    /usr/lib/libgif.so.4.1.6
+b691b000-b691d000 r-xp 00000000 08:0a 1332814    /usr/lib/imlib2/loaders/gif.so
+b691d000-b691e000 r--p 00001000 08:0a 1332814    /usr/lib/imlib2/loaders/gif.so
+b691e000-b691f000 rw-p 00002000 08:0a 1332814    /usr/lib/imlib2/loaders/gif.so
+b691f000-b6922000 r-xp 00000000 08:0a 1332819    /usr/lib/imlib2/loaders/id3.so
+b6922000-b6923000 r--p 00002000 08:0a 1332819    /usr/lib/imlib2/loaders/id3.so
+b6923000-b6924000 rw-p 00003000 08:0a 1332819    /usr/lib/imlib2/loaders/id3.so
+b6924000-b6926000 r-xp 00000000 08:0a 1332818    /usr/lib/imlib2/loaders/jpeg.so
+b6926000-b6927000 r--p 00001000 08:0a 1332818    /usr/lib/imlib2/loaders/jpeg.so
+b6927000-b6928000 rw-p 00002000 08:0a 1332818    /usr/lib/imlib2/loaders/jpeg.so
+b6928000-b692a000 r-xp 00000000 08:0a 1333053    /usr/lib/imlib2/loaders/lbm.so
+b692a000-b692b000 r--p 00002000 08:0a 1333053    /usr/lib/imlib2/loaders/lbm.so
+b692b000-b692c000 rw-p 00003000 08:0a 1333053    /usr/lib/imlib2/loaders/lbm.so
+b692c000-b6936000 r-xp 00000000 08:01 345539     /lib/i386-linux-gnu/i686/cmov/libnss_files-2.13.so
+b6936000-b6937000 r--p 00009000 08:01 345539     /lib/i386-linux-gnu/i686/cmov/libnss_files-2.13.so
+b6937000-b6938000 rw-p 0000a000 08:01 345539     /lib/i386-linux-gnu/i686/cmov/libnss_files-2.13.so
+b6938000-b6941000 r-xp 00000000 08:01 342876     /lib/i386-linux-gnu/i686/cmov/libnss_nis-2.13.so
+b6941000-b6942000 r--p 00008000 08:01 342876     /lib/i386-linux-gnu/i686/cmov/libnss_nis-2.13.so
+b6942000-b6943000 rw-p 00009000 08:01 342876     /lib/i386-linux-gnu/i686/cmov/libnss_nis-2.13.so
+b6943000-b6956000 r-xp 00000000 08:01 345529     /lib/i386-linux-gnu/i686/cmov/libnsl-2.13.so
+b6956000-b6957000 r--p 00012000 08:01 345529     /lib/i386-linux-gnu/i686/cmov/libnsl-2.13.so
+b6957000-b6958000 rw-p 00013000 08:01 345529     /lib/i386-linux-gnu/i686/cmov/libnsl-2.13.so
+b6958000-b695a000 rw-p 00000000 00:00 0 
+b695a000-b6960000 r-xp 00000000 08:01 345525     /lib/i386-linux-gnu/i686/cmov/libnss_compat-2.13.so
+b6960000-b6961000 r--p 00005000 08:01 345525     /lib/i386-linux-gnu/i686/cmov/libnss_compat-2.13.so
+b6961000-b6962000 rw-p 00006000 08:01 345525     /lib/i386-linux-gnu/i686/cmov/libnss_compat-2.13.so
+b6962000-b6965000 r-xp 00000000 08:0a 1332824    /usr/lib/imlib2/loaders/png.so
+b6965000-b6966000 r--p 00002000 08:0a 1332824    /usr/lib/imlib2/loaders/png.so
+b6966000-b6967000 rw-p 00003000 08:0a 1332824    /usr/lib/imlib2/loaders/png.so
+b6967000-b6969000 r-xp 00000000 08:0a 1332825    /usr/lib/imlib2/loaders/pnm.so
+b6969000-b696a000 r--p 00002000 08:0a 1332825    /usr/lib/imlib2/loaders/pnm.so
+b696a000-b696b000 rw-p 00003000 08:0a 1332825    /usr/lib/imlib2/loaders/pnm.so
+b696b000-b696d000 r-xp 00000000 08:0a 1332820    /usr/lib/imlib2/loaders/tga.so
+b696d000-b696e000 r--p 00001000 08:0a 1332820    /usr/lib/imlib2/loaders/tga.so
+b696e000-b696f000 rw-p 00002000 08:0a 1332820    /usr/lib/imlib2/loaders/tga.so
+b696f000-b6972000 r-xp 00000000 08:0a 1333052    /usr/lib/imlib2/loaders/tiff.so
+b6972000-b6973000 r--p 00002000 08:0a 1333052    /usr/lib/imlib2/loaders/tiff.so
+b6973000-b6974000 rw-p 00003000 08:0a 1333052    /usr/lib/imlib2/loaders/tiff.so
+b6974000-b6977000 r-xp 00000000 08:0a 1332815    /usr/lib/imlib2/loaders/xpm.so
+b6977000-b6978000 r--p 00002000 08:0a 1332815    /usr/lib/imlib2/loaders/xpm.so
+b6978000-b6979000 rw-p 00003000 08:0a 1332815    /usr/lib/imlib2/loaders/xpm.so
+b6979000-b697a000 r-xp 00000000 08:0a 1333051    /usr/lib/imlib2/loaders/zlib.so
+b697a000-b697b000 r--p 00000000 08:0a 1333051    /usr/lib/imlib2/loaders/zlib.so
+b697b000-b697c000 rw-p 00001000 08:0a 1333051    /usr/lib/imlib2/loaders/zlib.so
+b697c000-b697e000 r-xp 00000000 08:0a 1275720    /usr/lib/lua/5.1/inotify.so
+b697e000-b697f000 rw-p 00002000 08:0a 1275720    /usr/lib/lua/5.1/inotify.so
+b697f000-b698c000 r--p 00000000 08:0a 868130     /usr/share/fonts/truetype/ttf-bitstream-vera/VeraMono.ttf
+b698c000-b698e000 r-xp 00000000 08:0a 90384      /usr/lib/i386-linux-gnu/pango/1.6.0/modules/pango-basic-fc.so
+b698e000-b698f000 r--p 00001000 08:0a 90384      /usr/lib/i386-linux-gnu/pango/1.6.0/modules/pango-basic-fc.so
+b698f000-b6990000 rw-p 00002000 08:0a 90384      /usr/lib/i386-linux-gnu/pango/1.6.0/modules/pango-basic-fc.so
+b6990000-b69a1000 r--p 00000000 08:0a 868132     /usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf
+b69a1000-b69a2000 r--s 00000000 08:01 317756     /var/cache/fontconfig/c05880de57d1f5e948fdfacc138775d9-le32d4.cache-3
+b69a2000-b69a8000 r--s 00000000 08:01 317751     /var/cache/fontconfig/945677eb7aeaf62f1d50efc3fb3ec7d8-le32d4.cache-3
+b69a8000-b69a9000 r--s 00000000 08:01 318463     /var/cache/fontconfig/617957603a337376ca8784972c6029f5-le32d4.cache-3
+b69a9000-b69ad000 r--s 00000000 08:01 318533     /var/cache/fontconfig/6eb3985aa4124903f6ff08ba781cd364-le32d4.cache-3
+b69ad000-b69b4000 r--s 00000000 08:01 318953     /var/cache/fontconfig/6d41288fd70b0be22e8c3a91e032eec0-le32d4.cache-3
+b69b4000-b69b7000 r--s 00000000 08:01 318952     /var/cache/fontconfig/de156ccd2eddbdc19d37a45b8b2aac9c-le32d4.cache-3
+b69b7000-b69b8000 r--s 00000000 08:01 318462     /var/cache/fontconfig/9c956a7723ca69a44b382d9179c9802f-le32d4.cache-3
+b69b8000-b69b9000 r--s 00000000 08:01 317944     /var/cache/fontconfig/4794a0821666d79190d59a36cb4f44b5-le32d4.cache-3
+b69b9000-b69ba000 r--s 00000000 08:01 318461     /var/cache/fontconfig/9eae20f1ff8cc0a7d125749e875856bd-le32d4.cache-3
+b69ba000-b69bc000 r--s 00000000 08:01 318460     /var/cache/fontconfig/bf2c1853a9e9b00bb02fe2e9bcf1e201-le32d4.cache-3
+b69bc000-b69cf000 r--s 00000000 08:01 317757     /var/cache/fontconfig/e13b20fdb08344e0e664864cc2ede53d-le32d4.cache-3
+b69cf000-b69fb000 r-xp 00000000 08:0a 556858     /usr/lib/i386-linux-gnu/libpangoft2-1.0.so.0.3000.0
+b69fb000-b69fc000 r--p 0002b000 08:0a 556858     /usr/lib/i386-linux-gnu/libpangoft2-1.0.so.0.3000.0
+b69fc000-b69fd000 rw-p 0002c000 08:0a 556858     /usr/lib/i386-linux-gnu/libpangoft2-1.0.so.0.3000.0
+b69fd000-b6a47000 r-xp 00000000 08:0a 556898     /usr/lib/i386-linux-gnu/libpango-1.0.so.0.3000.0
+b6a47000-b6a48000 r--p 0004a000 08:0a 556898     /usr/lib/i386-linux-gnu/libpango-1.0.so.0.3000.0
+b6a48000-b6a49000 rw-p 0004b000 08:0a 556898     /usr/lib/i386-linux-gnu/libpango-1.0.so.0.3000.0
+b6a49000-b6a4b000 r--s 00000000 08:01 318457     /var/cache/fontconfig/c57959a16110560c8d0fcea73374aeeb-le32d4.cache-3
+b6a4b000-b6a4f000 r--s 00000000 08:01 318532     /var/cache/fontconfig/3047814df9a2f067bd2d96a2b9c36e5a-le32d4.cache-3
+b6a4f000-b6a5c000 r--s 00000000 08:01 318454     /var/cache/fontconfig/d52a8644073d54c13679302ca1180695-le32d4.cache-3
+b6a5c000-b6a61000 r--s 00000000 08:01 318944     /var/cache/fontconfig/105b9c7e6f0a4f82d8c9b6e39c52c6f9-le32d4.cache-3
+b6a61000-b6a67000 r--s 00000000 08:01 319113     /var/cache/fontconfig/3f7329c5293ffd510edef78f73874cfd-le32d4.cache-3
+b6a67000-b6a6e000 r--s 00000000 08:01 318242     /var/cache/fontconfig/83bf95040141907cd45bb53cf7c1c148-le32d4.cache-3
+b6a6e000-b6a77000 r--s 00000000 08:01 318241     /var/cache/fontconfig/53d14c92082a93e67d5078324eb314ca-le32d4.cache-3
+b6a77000-b6a7c000 r-xp 00000000 08:0a 74223      /usr/lib/i386-linux-gnu/libcairo-gobject.so.2.11200.2
+b6a7c000-b6a7d000 ---p 00005000 08:0a 74223      /usr/lib/i386-linux-gnu/libcairo-gobject.so.2.11200.2
+b6a7d000-b6a7e000 r--p 00005000 08:0a 74223      /usr/lib/i386-linux-gnu/libcairo-gobject.so.2.11200.2
+b6a7e000-b6a7f000 rw-p 00006000 08:0a 74223      /usr/lib/i386-linux-gnu/libcairo-gobject.so.2.11200.2
+b6a7f000-b6a81000 r--s 00000000 08:01 318456     /var/cache/fontconfig/14d493b97896515cad3840ba4896e372-le32d4.cache-3
+b6a81000-b6a82000 r--s 00000000 08:01 318455     /var/cache/fontconfig/89034621ae2a8922916bb6bfa5799546-le32d4.cache-3
+b6a82000-b6a84000 r--s 00000000 08:01 318947     /var/cache/fontconfig/e49e89034d371f0f9de17aab02136486-le32d4.cache-3
+b6a84000-b6a86000 r--s 00000000 08:01 318453     /var/cache/fontconfig/65f976e5259cbe6dc7697b8648396239-le32d4.cache-3
+b6a86000-b6a93000 r--s 00000000 08:01 318240     /var/cache/fontconfig/4ac51e5cfbc76fc3f983e470323a16d3-le32d4.cache-3
+b6a93000-b6a9e000 r-xp 00000000 08:0a 556888     /usr/lib/i386-linux-gnu/libpangocairo-1.0.so.0.3000.0
+b6a9e000-b6a9f000 r--p 0000b000 08:0a 556888     /usr/lib/i386-linux-gnu/libpangocairo-1.0.so.0.3000.0
+b6a9f000-b6aa0000 rw-p 0000c000 08:0a 556888     /usr/lib/i386-linux-gnu/libpangocairo-1.0.so.0.3000.0
+b6aa0000-b6aad000 r--p 00000000 08:0a 57459      /usr/lib/girepository-1.0/Pango-1.0.typelib
+b6aad000-b6aae000 r--p 00000000 08:0a 1129566    /usr/lib/girepository-1.0/cairo-1.0.typelib
+b6aae000-b6abb000 r--p 00000000 08:0a 1128962    /usr/lib/girepository-1.0/GObject-2.0.typelib
+b6abb000-b6acb000 r-xp 00000000 08:01 345523     /lib/i386-linux-gnu/i686/cmov/libresolv-2.13.so
+b6acb000-b6acc000 r--p 00010000 08:01 345523     /lib/i386-linux-gnu/i686/cmov/libresolv-2.13.so
+b6acc000-b6acd000 rw-p 00011000 08:01 345523     /lib/i386-linux-gnu/i686/cmov/libresolv-2.13.so
+b6acd000-b6acf000 rw-p 00000000 00:00 0 
+b6acf000-b6aed000 r-xp 00000000 08:01 334636     /lib/i386-linux-gnu/libselinux.so.1
+b6aed000-b6aee000 r--p 0001d000 08:01 334636     /lib/i386-linux-gnu/libselinux.so.1
+b6aee000-b6aef000 rw-p 0001e000 08:01 334636     /lib/i386-linux-gnu/libselinux.so.1
+b6aef000-b6c48000 r-xp 00000000 08:0a 74961      /usr/lib/i386-linux-gnu/libgio-2.0.so.0.3200.3
+b6c48000-b6c4a000 r--p 00159000 08:0a 74961      /usr/lib/i386-linux-gnu/libgio-2.0.so.0.3200.3
+b6c4a000-b6c4b000 rw-p 0015b000 08:0a 74961      /usr/lib/i386-linux-gnu/libgio-2.0.so.0.3200.3
+b6c4b000-b6c4c000 rw-p 00000000 00:00 0 
+b6c4c000-b6c9c000 r-xp 00000000 08:0a 74963      /usr/lib/i386-linux-gnu/libgobject-2.0.so.0.3200.3
+b6c9c000-b6c9d000 r--p 0004f000 08:0a 74963      /usr/lib/i386-linux-gnu/libgobject-2.0.so.0.3200.3
+b6c9d000-b6c9e000 rw-p 00050000 08:0a 74963      /usr/lib/i386-linux-gnu/libgobject-2.0.so.0.3200.3
+b6c9e000-b6cd4000 r-xp 00000000 08:0a 1226774    /usr/lib/libgirepository-1.0.so.1.0.0
+b6cd4000-b6cd5000 r--p 00035000 08:0a 1226774    /usr/lib/libgirepository-1.0.so.1.0.0
+b6cd5000-b6cd6000 rw-p 00036000 08:0a 1226774    /usr/lib/libgirepository-1.0.so.1.0.0
+b6cd6000-b6cd7000 r--s 00000000 08:01 318946     /var/cache/fontconfig/4b14b093aebc79c320de5e86ae1d3314-le32d4.cache-3
+b6cd7000-b6cd8000 r--s 00000000 08:01 318438     /var/cache/fontconfig/94f7fe9bd33aadfac165873bd010d595-le32d4.cache-3
+b6cd8000-b6cd9000 r--s 00000000 08:01 318247     /var/cache/fontconfig/423767150eb258c59035de29db6fca84-le32d4.cache-3
+b6cd9000-b6cda000 r--s 00000000 08:01 318246     /var/cache/fontconfig/406a1d2d2bf3ed7664fbadefac0b2f66-le32d4.cache-3
+b6cda000-b6cdc000 r--s 00000000 08:01 318245     /var/cache/fontconfig/67709b7835c0f764c1135060c9575660-le32d4.cache-3
+b6cdc000-b6d04000 r--p 00000000 08:0a 1128960    /usr/lib/girepository-1.0/GLib-2.0.typelib
+b6d04000-b6e7b000 r--p 00000000 08:0a 1227551    /usr/lib/locale/locale-archive
+b6e7b000-b6e7e000 rw-p 00000000 00:00 0 
+b6e7e000-b6ea4000 r-xp 00000000 08:01 333939     /lib/i386-linux-gnu/libexpat.so.1.6.0
+b6ea4000-b6ea5000 ---p 00026000 08:01 333939     /lib/i386-linux-gnu/libexpat.so.1.6.0
+b6ea5000-b6ea7000 r--p 00026000 08:01 333939     /lib/i386-linux-gnu/libexpat.so.1.6.0
+b6ea7000-b6ea8000 rw-p 00028000 08:01 333939     /lib/i386-linux-gnu/libexpat.so.1.6.0
+b6ea8000-b6eb9000 r-xp 00000000 08:0a 74109      /usr/lib/i386-linux-gnu/libXext.so.6.4.0
+b6eb9000-b6eba000 rw-p 00010000 08:0a 74109      /usr/lib/i386-linux-gnu/libXext.so.6.4.0
+b6eba000-b6ebb000 r-xp 00000000 08:0a 74618      /usr/lib/i386-linux-gnu/libX11-xcb.so.1.0.0
+b6ebb000-b6ebc000 rw-p 00000000 08:0a 74618      /usr/lib/i386-linux-gnu/libX11-xcb.so.1.0.0
+b6ebc000-b6ed3000 r-xp 00000000 08:01 334138     /lib/i386-linux-gnu/libz.so.1.2.7
+b6ed3000-b6ed4000 r--p 00016000 08:01 334138     /lib/i386-linux-gnu/libz.so.1.2.7
+b6ed4000-b6ed5000 rw-p 00017000 08:01 334138     /lib/i386-linux-gnu/libz.so.1.2.7
+b6ed5000-b6ed6000 rw-p 00000000 00:00 0 
+b6ed6000-b6ede000 r-xp 00000000 08:0a 74486      /usr/lib/i386-linux-gnu/libXrender.so.1.3.0
+b6ede000-b6edf000 rw-p 00008000 08:0a 74486      /usr/lib/i386-linux-gnu/libXrender.so.1.3.0
+b6edf000-b6f07000 r-xp 00000000 08:01 334411     /lib/i386-linux-gnu/libpng12.so.0.49.0
+b6f07000-b6f08000 r--p 00027000 08:01 334411     /lib/i386-linux-gnu/libpng12.so.0.49.0
+b6f08000-b6f09000 rw-p 00028000 08:01 334411     /lib/i386-linux-gnu/libpng12.so.0.49.0
+b6f09000-b6fa0000 r-xp 00000000 08:0a 73959      /usr/lib/i386-linux-gnu/libfreetype.so.6.8.1
+b6fa0000-b6fa4000 r--p 00096000 08:0a 73959      /usr/lib/i386-linux-gnu/libfreetype.so.6.8.1
+b6fa4000-b6fa5000 rw-p 0009a000 08:0a 73959      /usr/lib/i386-linux-gnu/libfreetype.so.6.8.1
+b6fa5000-b6fd9000 r-xp 00000000 08:0a 73853      /usr/lib/i386-linux-gnu/libfontconfig.so.1.5.0
+b6fd9000-b6fda000 r--p 00033000 08:0a 73853      /usr/lib/i386-linux-gnu/libfontconfig.so.1.5.0
+b6fda000-b6fdb000 rw-p 00034000 08:0a 73853      /usr/lib/i386-linux-gnu/libfontconfig.so.1.5.0
+b6fdb000-b706e000 r-xp 00000000 08:0a 73588      /usr/lib/i386-linux-gnu/libpixman-1.so.0.24.4
+b706e000-b7072000 rw-p 00093000 08:0a 73588      /usr/lib/i386-linux-gnu/libpixman-1.so.0.24.4
+b7072000-b7073000 rw-p 00000000 00:00 0 
+b7073000-b7075000 r-xp 00000000 08:01 345513     /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+b7075000-b7076000 r--p 00001000 08:01 345513     /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+b7076000-b7077000 rw-p 00002000 08:01 345513     /lib/i386-linux-gnu/i686/cmov/libdl-2.13.so
+b7077000-b707e000 r-xp 00000000 08:01 345547     /lib/i386-linux-gnu/i686/cmov/librt-2.13.so
+b707e000-b707f000 r--p 00006000 08:01 345547     /lib/i386-linux-gnu/i686/cmov/librt-2.13.so
+b707f000-b7080000 rw-p 00007000 08:01 345547     /lib/i386-linux-gnu/i686/cmov/librt-2.13.so
+b7080000-b7095000 r-xp 00000000 08:01 345507     /lib/i386-linux-gnu/i686/cmov/libpthread-2.13.so
+b7095000-b7096000 r--p 00014000 08:01 345507     /lib/i386-linux-gnu/i686/cmov/libpthread-2.13.so
+b7096000-b7097000 rw-p 00015000 08:01 345507     /lib/i386-linux-gnu/i686/cmov/libpthread-2.13.so
+b7097000-b7099000 rw-p 00000000 00:00 0 
+b7099000-b70d6000 r-xp 00000000 08:01 433053     /lib/i386-linux-gnu/libpcre.so.3.13.1
+b70d6000-b70d7000 rw-p 0003c000 08:01 433053     /lib/i386-linux-gnu/libpcre.so.3.13.1
+b70d7000-b70dc000 r-xp 00000000 08:0a 74287      /usr/lib/i386-linux-gnu/libXdmcp.so.6.0.0
+b70dc000-b70dd000 rw-p 00004000 08:0a 74287      /usr/lib/i386-linux-gnu/libXdmcp.so.6.0.0
+b70dd000-b70de000 rw-p 00000000 00:00 0 
+b70de000-b70e0000 r-xp 00000000 08:0a 74274      /usr/lib/i386-linux-gnu/libXau.so.6.0.0
+b70e0000-b70e1000 rw-p 00001000 08:0a 74274      /usr/lib/i386-linux-gnu/libXau.so.6.0.0
+b70e1000-b7237000 r-xp 00000000 08:01 345537     /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+b7237000-b7238000 ---p 00156000 08:01 345537     /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+b7238000-b723a000 r--p 00156000 08:01 345537     /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+b723a000-b723b000 rw-p 00158000 08:01 345537     /lib/i386-linux-gnu/i686/cmov/libc-2.13.so
+b723b000-b723e000 rw-p 00000000 00:00 0 
+b723e000-b7287000 r-xp 00000000 08:01 333929     /lib/i386-linux-gnu/libdbus-1.so.3.7.1
+b7287000-b7288000 r--p 00049000 08:01 333929     /lib/i386-linux-gnu/libdbus-1.so.3.7.1
+b7288000-b7289000 rw-p 0004a000 08:01 333929     /lib/i386-linux-gnu/libdbus-1.so.3.7.1
+b7289000-b72ad000 r-xp 00000000 08:01 345527     /lib/i386-linux-gnu/i686/cmov/libm-2.13.so
+b72ad000-b72ae000 r--p 00023000 08:01 345527     /lib/i386-linux-gnu/i686/cmov/libm-2.13.so
+b72ae000-b72af000 rw-p 00024000 08:01 345527     /lib/i386-linux-gnu/i686/cmov/libm-2.13.so
+b72af000-b72db000 r-xp 00000000 08:0a 75445      /usr/lib/i386-linux-gnu/liblua5.1.so.0.0.0
+b72db000-b72dc000 rw-p 0002c000 08:0a 75445      /usr/lib/i386-linux-gnu/liblua5.1.so.0.0.0
+b72dc000-b72dd000 rw-p 00000000 00:00 0 
+b72dd000-b72ea000 r-xp 00000000 08:0a 1227870    /usr/lib/libev.so.4.0.0
+b72ea000-b72eb000 rw-p 0000d000 08:0a 1227870    /usr/lib/libev.so.4.0.0
+b72eb000-b72ed000 r-xp 00000000 08:0a 1227291    /usr/lib/libxdg-basedir.so.1.1.0
+b72ed000-b72ee000 rw-p 00001000 08:0a 1227291    /usr/lib/libxdg-basedir.so.1.1.0
+b72ee000-b7345000 r-xp 00000000 08:0a 1227066    /usr/lib/libImlib2.so.1.4.5
+b7345000-b7346000 r--p 00057000 08:0a 1227066    /usr/lib/libImlib2.so.1.4.5
+b7346000-b7347000 rw-p 00058000 08:0a 1227066    /usr/lib/libImlib2.so.1.4.5
+b7347000-b735b000 rw-p 00000000 00:00 0 
+b735b000-b7364000 r-xp 00000000 08:0a 1229038    /usr/lib/libstartup-notification-1.so.0.0.0
+b7364000-b7365000 rw-p 00008000 08:0a 1229038    /usr/lib/libstartup-notification-1.so.0.0.0
+b7365000-b736e000 r-xp 00000000 08:0a 73990      /usr/lib/i386-linux-gnu/libxcb-render.so.0.0.0
+b736e000-b736f000 r--p 00008000 08:0a 73990      /usr/lib/i386-linux-gnu/libxcb-render.so.0.0.0
+b736f000-b7370000 rw-p 00009000 08:0a 73990      /usr/lib/i386-linux-gnu/libxcb-render.so.0.0.0
+b7370000-b7371000 rw-p 00000000 00:00 0 
+b7371000-b747b000 r-xp 00000000 08:0a 74194      /usr/lib/i386-linux-gnu/libcairo.so.2.11200.2
+b747b000-b747d000 r--p 0010a000 08:0a 74194      /usr/lib/i386-linux-gnu/libcairo.so.2.11200.2
+b747d000-b747e000 rw-p 0010c000 08:0a 74194      /usr/lib/i386-linux-gnu/libcairo.so.2.11200.2
+b747e000-b747f000 rw-p 00000000 00:00 0 
+b747f000-b7481000 r-xp 00000000 08:0a 74312      /usr/lib/i386-linux-gnu/libxcb-shm.so.0.0.0
+b7481000-b7482000 r--p 00001000 08:0a 74312      /usr/lib/i386-linux-gnu/libxcb-shm.so.0.0.0
+b7482000-b7483000 rw-p 00002000 08:0a 74312      /usr/lib/i386-linux-gnu/libxcb-shm.so.0.0.0
+b7483000-b7487000 r-xp 00000000 08:0a 557008     /usr/lib/i386-linux-gnu/libxcb-image.so.0.0.0
+b7487000-b7488000 r--p 00003000 08:0a 557008     /usr/lib/i386-linux-gnu/libxcb-image.so.0.0.0
+b7488000-b7489000 rw-p 00004000 08:0a 557008     /usr/lib/i386-linux-gnu/libxcb-image.so.0.0.0
+b7489000-b748e000 r-xp 00000000 08:0a 558269     /usr/lib/i386-linux-gnu/libxcb-icccm.so.4.0.0
+b748e000-b748f000 r--p 00004000 08:0a 558269     /usr/lib/i386-linux-gnu/libxcb-icccm.so.4.0.0
+b748f000-b7490000 rw-p 00005000 08:0a 558269     /usr/lib/i386-linux-gnu/libxcb-icccm.so.4.0.0
+b7490000-b7492000 r-xp 00000000 08:0a 557021     /usr/lib/i386-linux-gnu/libxcb-keysyms.so.1.0.0
+b7492000-b7493000 r--p 00001000 08:0a 557021     /usr/lib/i386-linux-gnu/libxcb-keysyms.so.1.0.0
+b7493000-b7494000 rw-p 00002000 08:0a 557021     /usr/lib/i386-linux-gnu/libxcb-keysyms.so.1.0.0
+b7494000-b7495000 rw-p 00000000 00:00 0 
+b7495000-b749a000 r-xp 00000000 08:0a 77608      /usr/lib/i386-linux-gnu/libxcb-util.so.0.0.0
+b749a000-b749b000 rw-p 00004000 08:0a 77608      /usr/lib/i386-linux-gnu/libxcb-util.so.0.0.0
+b749b000-b749d000 r-xp 00000000 08:0a 75956      /usr/lib/i386-linux-gnu/libxcb-xinerama.so.0.0.0
+b749d000-b749e000 r--p 00001000 08:0a 75956      /usr/lib/i386-linux-gnu/libxcb-xinerama.so.0.0.0
+b749e000-b749f000 rw-p 00002000 08:0a 75956      /usr/lib/i386-linux-gnu/libxcb-xinerama.so.0.0.0
+b749f000-b74a1000 r-xp 00000000 08:0a 75962      /usr/lib/i386-linux-gnu/libxcb-xtest.so.0.0.0
+b74a1000-b74a2000 r--p 00001000 08:0a 75962      /usr/lib/i386-linux-gnu/libxcb-xtest.so.0.0.0
+b74a2000-b74a3000 rw-p 00002000 08:0a 75962      /usr/lib/i386-linux-gnu/libxcb-xtest.so.0.0.0
+b74a3000-b74ad000 r-xp 00000000 08:0a 75946      /usr/lib/i386-linux-gnu/libxcb-randr.so.0.1.0
+b74ad000-b74ae000 r--p 00009000 08:0a 75946      /usr/lib/i386-linux-gnu/libxcb-randr.so.0.1.0
+b74ae000-b74af000 rw-p 0000a000 08:0a 75946      /usr/lib/i386-linux-gnu/libxcb-randr.so.0.1.0
+b74af000-b75e3000 r-xp 00000000 08:0a 73773      /usr/lib/i386-linux-gnu/libX11.so.6.3.0
+b75e3000-b75e7000 rw-p 00133000 08:0a 73773      /usr/lib/i386-linux-gnu/libX11.so.6.3.0
+b75e7000-b75e8000 rw-p 00000000 00:00 0 
+b75e8000-b76e3000 r-xp 00000000 08:01 433322     /lib/i386-linux-gnu/libglib-2.0.so.0.3200.3
+b76e3000-b76e4000 r--p 000fa000 08:01 433322     /lib/i386-linux-gnu/libglib-2.0.so.0.3200.3
+b76e4000-b76e5000 rw-p 000fb000 08:01 433322     /lib/i386-linux-gnu/libglib-2.0.so.0.3200.3
+b76e5000-b7706000 r-xp 00000000 08:0a 74300      /usr/lib/i386-linux-gnu/libxcb.so.1.1.0
+b7706000-b7707000 r--p 00020000 08:0a 74300      /usr/lib/i386-linux-gnu/libxcb.so.1.1.0
+b7707000-b7708000 rw-p 00021000 08:0a 74300      /usr/lib/i386-linux-gnu/libxcb.so.1.1.0
+b7708000-b7709000 r--p 00000000 08:0a 58330      /usr/lib/girepository-1.0/PangoFT2-1.0.typelib
+b7709000-b770a000 r--p 00000000 08:0a 1129559    /usr/lib/girepository-1.0/fontconfig-2.0.typelib
+b770a000-b770b000 r--p 00000000 08:0a 1129562    /usr/lib/girepository-1.0/freetype2-2.0.typelib
+b770b000-b770d000 r--p 00000000 08:0a 57249      /usr/lib/girepository-1.0/PangoCairo-1.0.typelib
+b770d000-b7715000 r-xp 00000000 08:0a 1063698    /usr/lib/i386-linux-gnu/libffi.so.5.0.10
+b7715000-b7716000 rw-p 00008000 08:0a 1063698    /usr/lib/i386-linux-gnu/libffi.so.5.0.10
+b7716000-b7719000 r-xp 00000000 08:0a 74962      /usr/lib/i386-linux-gnu/libgmodule-2.0.so.0.3200.3
+b7719000-b771a000 r--p 00002000 08:0a 74962      /usr/lib/i386-linux-gnu/libgmodule-2.0.so.0.3200.3
+b771a000-b771b000 rw-p 00003000 08:0a 74962      /usr/lib/i386-linux-gnu/libgmodule-2.0.so.0.3200.3
+b771b000-b771c000 r-xp 00000000 08:0a 74960      /usr/lib/i386-linux-gnu/libgthread-2.0.so.0.3200.3
+b771c000-b771d000 r--p 00000000 08:0a 74960      /usr/lib/i386-linux-gnu/libgthread-2.0.so.0.3200.3
+b771d000-b771e000 rw-p 00001000 08:0a 74960      /usr/lib/i386-linux-gnu/libgthread-2.0.so.0.3200.3
+b771e000-b7734000 r-xp 00000000 08:0a 75403      /usr/lib/i386-linux-gnu/liblua5.1-lgi.so.0.0.0
+b7734000-b7735000 r--p 00015000 08:0a 75403      /usr/lib/i386-linux-gnu/liblua5.1-lgi.so.0.0.0
+b7735000-b7736000 rw-p 00016000 08:0a 75403      /usr/lib/i386-linux-gnu/liblua5.1-lgi.so.0.0.0
+b7736000-b7738000 rw-p 00000000 00:00 0 
+b7738000-b7739000 r-xp 00000000 00:00 0          [vdso]
+b7739000-b7755000 r-xp 00000000 08:01 335838     /lib/i386-linux-gnu/ld-2.13.so
+b7755000-b7756000 r--p 0001b000 08:01 335838     /lib/i386-linux-gnu/ld-2.13.so
+b7756000-b7757000 rw-p 0001c000 08:01 335838     /lib/i386-linux-gnu/ld-2.13.so
+bfabc000-bfad1000 rw-p 00000000 00:00 0          [stack]
+urxvt: X connection to ':1.0' broken, unable to recover, exiting.
+urxvt: X connection to ':1.0' broken, unable to recover, exiting.
