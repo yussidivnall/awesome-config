@@ -23,9 +23,12 @@ function printsomthing(args)
 function lpanel.new(args)
     local ret={}
     if(args==nil)then args={} end
+	ret.wb_params = args.wibox_params or {}
+	ret.wibox=z.utils.new_wibox(ret.wb_params)
     ret.root_layout = args.root_layout or wibox.layout.align.vertical()
     ret.num_rows=args.rows or 15
     setmetatable(ret,{__index=lpanel})
+    return ret
 end
 
 ---Shows panel
