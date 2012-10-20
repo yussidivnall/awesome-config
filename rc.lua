@@ -40,6 +40,7 @@ naughty.notify({text="This is a testing config"})
 
 --Sometimes it helps if you require something after beautiful init, Naughty does that
 local z = require("z")
+
 --z.tags=require("z.tags")
 local widgets_box=require("widgets_box")
 --local z.tags=require("z.tags")
@@ -129,7 +130,10 @@ keys.global=awful.util.table.join(
 	awful.key({ config.modkey,           },"c", function() zapps.clips.clip() end),
 --    awful.key({ config.modkey,           }, "a",function() widgets_box.toggle() end),
     awful.key({ config.modkey,"Control"  }, "r",awesome.restart),
-    awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit)
+    awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit),
+    --volume stuff
+    awful.key({                          }, "XF86AudioRaiseVolume",function() z.media.volume_up() end),
+    awful.key({                          }, "XF86AudioLowerVolume",function() z.media.volume_down() end)
 )
 --[[Client keys ]]--
 keys.client=awful.util.table.join(
@@ -325,6 +329,10 @@ end
 allocate_screens(args)
 
 
+--[[ Testing lpanel ]]--
+local pan=z.lpanel({})
+pan:show()
+
 root.keys(keys.global)
 awful.rules.rules = {
     { rule = { },
@@ -480,7 +488,3 @@ end
 function msg(s)
 	naughty.notify({text=s,timeout=15})
 end
---Testing
---require("z.lpanel")
---mlpanel=z.lpanel({})
---mlpanel:show()
