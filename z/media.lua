@@ -7,8 +7,8 @@ local os=os
 module("z.media")
 panel={}
 volume_widget={}
-cmd_volume_up="amixer set Master 5%+| egrep -o \"[0-9]+%\""
-cmd_volume_down="amixer set Master 5%-| egrep -o \"[0-9]+%\""
+cmd_volume_up="amixer set Master 5%+"
+cmd_volume_down="amixer set Master 5%-"
 msg_id=23
 
 function update_widget()
