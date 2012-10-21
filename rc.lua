@@ -128,7 +128,7 @@ keys.global=awful.util.table.join(
 	--clipboard stuff
 	awful.key({ config.modkey,     	     },"v", function() zapps.clips.next_select() end),
 	awful.key({ config.modkey,           },"c", function() zapps.clips.clip() end),
---    awful.key({ config.modkey,           }, "a",function() widgets_box.toggle() end),
+    --awful.key({ config.modkey,           }, "a",function() widgets_box.toggle() end),
     awful.key({ config.modkey,"Control"  }, "r",awesome.restart),
     awful.key({ config.modkey,"Control"  }, "Escape",awesome.quit),
     --volume stuff

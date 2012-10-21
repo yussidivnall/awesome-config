@@ -6,17 +6,30 @@ local io=io
 local os=os
 module("z.media")
 panel={}
-volume_bar_widget={}
+volume_widget={}
+cmd_volume_up="amixer set Master 5%+| egrep -o \"[0-9]+%\""
+cmd_volume_down="amixer set Master 5%-| egrep -o \"[0-9]+%\""
+msg_id=23
+
+function update_widget()
+    
+    end
 function volume_up()
-    cmd="amixer set Master 5%+"
-    os.execute(cmd)
+    f=io.popen(cmd_volume_up)
+    txt=f:read("*a")
+    f:close()
+    n=naughty.notify({text="<span color='gray'>Volume:</span><span color='green'>\n"..txt.."</span>" ,replaces_id=msg_id,position="top_left"})
+    msg_id=n.id
     end
 function volume_down()
-    cmd="amixer set Master 5%-"
-    os.execute(cmd)
+    f=io.popen(cmd_volume_down)
+    txt=f:read("*a")
+    f:close()
+    n=naughty.notify({text="<span color='gray'>Volume:</span><span color='green'>\n"..txt.."</span>" ,replaces_id=msg_id,position="top_left"})
+    msg_id=n.id
     end
 function init()
     naughty.notify({text='<span color="yellow">z.media LOADED!</span>'})
-    volume_bar_wiget=awful.widget.progressbar()
+    wolume_widget=awful.widget.progressbar()
     end
 init()
