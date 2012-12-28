@@ -26,7 +26,7 @@ function add_widgets()
     local payload_layout=wibox.layout.fixed.vertical()
 
     --Memory stuff
-    local mem_text_widget=wibox.widget.textbox({})
+    local mem_text_widget=wibox.widget.textbox()
 
     mem_text_widget:buttons(awful.util.table.join(
        awful.button({ }, 1, function () awful.util.spawn("echo Left mouse button pressed.") end)

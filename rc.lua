@@ -157,8 +157,12 @@ keys.client=awful.util.table.join(
     awful.key({ config.modkey,      },"=", function(c)resize_client(c,0.2) end),
     awful.key({ config.modkey,      },"-", function(c)resize_client(c,-0.2) end),
     --Client to tags
-    awful.key({ config.menukey,      },"<", function(c) c:geometry(config.geometry.top_right_corner) end), 
-    awful.key({ config.menukey,      },">", function(c) c:geometry(config.geometry.top_left_corner) end)
+    awful.key({ config.modkey,      },",", function(c) 
+        move_client_to_tag(c,{position='prev'})
+    end), 
+    awful.key({ config.modkey,      },".", function(c) 
+        move_client_to_tag(c,{position='next'})
+    end)
 )
 
 buttons.client=awful.util.table.join(
@@ -167,7 +171,8 @@ buttons.client=awful.util.table.join(
 	awful.button({},1,function(c) client.focus=c; c:raise() end)
 )
 buttons.taglist=awful.util.table.join(
-	awful.button({ config.modkey },3,awful.client.movetotag)
+	awful.button({ config.modkey },3,awful.client.movetotag),
+	awful.button({ config.modkey,"Control" },3,awful.client.toggletag)
 )
 
 config.tags={}
@@ -271,6 +276,28 @@ function add_tag(args)
     naughty.notify({text='screen: '..screen})
     return awful.tag.add(text,{})
 end
+function move_client_to_tag(c,args)
+    if not c or not args then return end
+    local curidx = awful.tag.getidx(c:tags()[1])
+    
+    if args.position=='prev' then 
+        if curidx == 1 then 
+        else
+            local t=awful.tag.gettags(mouse.screen)[curidx-1]
+            awful.client.movetotag(t,c)
+            awful.tag.viewprev(mouse.screen)
+        end
+    elseif args.position=='next' then
+       if curidx ==#awful.tag.gettags(mouse.screen) then
+       else
+            local t=awful.tag.gettags(mouse.screen)[curidx+1]
+            awful.client.movetotag(t,c)
+            awful.tag.viewnext(mouse.screen)
+       end
+    end
+end
+
+
 --[[[
     TODO Not working properly for new tags
     Search if tag already exist, return tag or new tag

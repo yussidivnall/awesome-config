@@ -1,4 +1,7 @@
-ls: cannot access /var/log/snort/tcpdump.log*: No such file or directory
-WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-dsi2uS/pkcs11: No such file or directory
-tshark: option requires an argument -- 'r'
-E: awesome: a_xcb_io_cb:251: X server connection broke
+WARNING: gnome-keyring:: couldn't connect to: /home/volcan/.cache/keyring-c5WbN2/pkcs11: No such file or directory
+tshark: The file "/var/log/snort/tcpdump.log.1356714765" could not be opened: Success.
+
+(process:11002): GLib-WARNING **: poll(2) failed due to: Resource temporarily unavailable.
+W: awesome: systray_cleanup:121: error getting systray atom
+urxvt: X connection to ':1.0' broken, unable to recover, exiting.
+W: awesome: systray_cleanup:121: error getting systray atom

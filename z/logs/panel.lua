@@ -160,7 +160,7 @@ function toggle_widget()
 	set_widget()
 end
 function init_widget()
-        widget=wibox.widget.textbox({})
+        widget=wibox.widget.textbox()
         set_widget()
         widget:buttons(
                 awful.button({},1,function() 
