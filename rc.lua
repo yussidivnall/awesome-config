@@ -120,6 +120,7 @@ keys.global=awful.util.table.join(
     --Tag manipulation
     awful.key({ config.modkey,       },"n",function() add_tag({}) end),
     awful.key({ config.modkey,       },"d",function() delete_tag({}) end),
+    awful.key({ config.modkey,"Shift"},"n",function() rename_tag() end),
 
     --run or raise stuff
     awful.key({ config.modkey,       }, "s", function() tstog(); end), -- toggle tshark
@@ -194,12 +195,6 @@ config.widgets.alertmenulauncher= awful.widget.launcher({ image = beautiful.awes
 
 config.multiple_screens="duplicate"
 
-function lua_prompt()
-    awful.prompt.run({prompt="lua >"},
-    shared.promptbox.widget,
-    awful.util.eval,nil,
-    awful.util.getdir("cache").."/history_eval")
-end
 function toggle_master()
     naughty.notify({text="toggling master"})
     c=awful.client.next(1)
@@ -270,12 +265,6 @@ function get_default_tags(args)
         local t=args.tags or {"main","www"}
         return awful.tag(t,s,config.layouts[1])
 end
-function add_tag(args)
-    local screen = args.screen or mouse.screen or 1
-    local text   = args.name or "Aux"
-    naughty.notify({text='screen: '..screen})
-    return awful.tag.add(text,{})
-end
 function move_client_to_tag(c,args)
     if not c or not args then return end
     local curidx = awful.tag.getidx(c:tags()[1])
@@ -297,9 +286,33 @@ function move_client_to_tag(c,args)
     end
 end
 
+function add_tag(args)
+    local screen = args.screen or mouse.screen or 1
+    local text   = args.name or "Aux"
+    naughty.notify({text='screen: '..screen})
+    return awful.tag.add(text,{})
+end
+
+function lua_prompt()
+    awful.prompt.run({prompt="lua >"},
+    shared.promptbox.widget,
+    awful.util.eval,nil,
+    awful.util.getdir("cache").."/history_eval")
+end
+function rename_tag(tag)
+    if tag then t=tag else t=awful.tag.selected(mouse.screen) end
+    naughty.notify({text='rename tag'})
+    awful.prompt.run(
+        {prompt='rename:'}, -- args
+        shared.promptbox.widget, --widget
+        function(name) t.name=name end, --exe callback
+        nil, --completion callback
+        awful.util.getdir("cache").."/history_eval" --history path
+    )
+    
+end
 
 --[[[
-    TODO Not working properly for new tags
     Search if tag already exist, return tag or new tag
     @args a table of arguments
     @args.name The tag we want
@@ -307,11 +320,10 @@ end
 function move_to_tag(args)
     if not args then return end
     if not args.name then return end
-    for i,v in ipairs(screens[mouse.screen].tags) do
-        naughty.notify({text="Tag#"..i..v.name})
-        if v.name==args.name then 
+      for i,t in ipairs(awful.tag.gettags(mouse.screen)) do
+        if t.name==args.name then 
             naughty.notify({text='found tag corresponding to'})
-            return v 
+            return t 
             end
         end
     return add_tag({name=args.name})
@@ -376,7 +388,10 @@ awful.rules.rules = {
     },
     --{ rule={ class="Icedove"},properties={tag = config.tags[1][2]},callback=function(c) naughty.notify({text='match icedove'})end},
     { rule={ class="Icedove",instance="Mail"}, properties={tag = function() return move_to_tag({name='email'}) end} },
-    { rule={ class="Iceweasel",instance="Navigator"}, properties={tag = function() return move_to_tag({name='www'}) end} },
+    { rule={ class="Iceweasel",instance="Navigator"}, properties={tag = function() return add_tag({name='www'}) end} },
+    { rule={ name="xbill"}, properties={tag = function() 
+        naughty.notify({text='xbill'})
+        return move_to_tag({name='xbill'}) end} },
     { rule={ class="emulator-arm",instance="emulator-arm"}, properties={tag = function() return move_to_tag({name='and-emu'}) end} },
 --    { rule={ class="Xephyr"}, properties={tag = function() return move_to_tag({name='awesome_test'}) end} },
 
